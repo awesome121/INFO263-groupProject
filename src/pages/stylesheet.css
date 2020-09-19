@@ -1,0 +1,37 @@
+/* UC colours in RGB for Web
+UC Red: #CC0011
+UC Grey (dark): #666666
+UC Grey (mid): #999999
+UC Grey (light): #CCCCCC
+UC Black: #000000 - which is just black
+ */
+
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #999999;
+}
+li{
+    float: left;
+}
+li a{
+    display:block;
+    color: white;
+    text-align: center;
+    padding:14px 16px;
+    test-decoration: none;
+}
+li a:hover{
+    text-decoration: none;
+    color: white;
+}
+li a:hover:not(.active){
+    background-color: #666666;
+}
+.active {
+    background-color: #CC0011;
+    text-decoration: none;
+    color: black;
+}
