@@ -48,10 +48,70 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    Content
+
                 </div>
             </div>
+            <!-- Constatines database code from the help session -->
+            <?
+            //Open database connection and run the query
+            require_once('../db_config.php');
+            $conn = new mysqli($hostname, $username, $password, $database);
+            //Test the connection and run the query
+            if($conn->connect_error){
+                die("Fatal error: " . $conn->connect_error);
+            }
+
+
+            //shows events that have happened in the past ordered by date descending
+            $query = "call INFO263_lcs57_tserver.show_events_past()";
+            $result = $conn->query($query);
+            //Test the query was completed without error
+            if($conn->error){
+                die("Fatal error: " . $conn->error);
+            }
+
+            //debugging code
+            //echo "<pre>" .print_r($result->fetch_fields(), true) . "</pre>"
+
+            $fields = $result->fetch_fields();
+            $field_names = [];
+            while($field = $result->fetch_field()){
+                $field_names[] = $field->name;
+            }
+            //debugging code
+            //echo "<pre>" .print_r($field_names, true) . "</pre>"
+            ?>
+
+            <table>
+                <tr>
+                    <?
+                    //output the headers
+                    for($i = 0; $i < sizeof($field_names); ++$i){
+                        echo "<th>" . htmlspecialchars($field_names[$i]). "</th>";
+                    }
+                    ?>
+                </tr>
+                <?
+                $num_rows = $result->num_rows;
+                for($j = 0; $j < $num_rows; ++$j){
+                    $row = $result->fetch_array(MYSQLI_ASSOC);
+                    echo "<tr>";
+                    for($k = 0; $k < sizeof($field_names); ++$k){
+                        echo "<td>" . htmlspecialchars($row[$field_names[$k]]) . "</td>";
+                    }
+                    echo "</tr>";
+                }
+                ?>
+            </table>
+
+            <?
+            $result->close();
+            $conn-> close();
+            ?>
         </div>
+
+
+
 
         <!-- Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
