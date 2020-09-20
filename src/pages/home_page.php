@@ -14,9 +14,22 @@
     <body>
         <ul>
             <li><img class="logo" src="UC logo.png"></li>
-            <li><a class="active" href="#home_page">Home</a></li>
-            <li><a href="#current_events">Current Events</a></li>
+            <li><a class="active" href="#home_page.php">Home</a></li>
+            <li><a href="#...">Current Events</a></li>
         </ul>
+        <div class = container>
+            <h1>Events</h1>
+            <!-- can't figure out how to make the boxes-->
+            <div1 class=container>Box</div1>
+            <p align="right">
+                <button class="button">Add</button>
+                <button class="button">Change</button>
+                <button class="button">Remove</button>
+            </p>
+
+
+        </div>
+
 
         <!-- Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
