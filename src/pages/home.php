@@ -45,16 +45,108 @@
             </form>
         </nav>
 
-        <div class="container">
-            <div class="row">
+        <div class="container-fluid">
+            <div class="row mt-3">
                 <div class="col">
-                    Date Range
+                    <button type="button" class="btn btn-secondary"><</button>
+                    <span class="h4">14/09/2020 - 20/09/2020</span> <!-- insert current date -->
+                    <button type="button" class="btn btn-secondary">></button>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row mt-2">
+                <div class="col pr-0">
+                    <div class="mb-2 h4">
+                        Monday
+                    </div>
+
+                    <div class="card bg-light mb-3">
+                        <div class="card-header">EMTH119-20S2 Monday</div>
+                        <div class="card-body">
+                            <p class="card-text">Start: 18:00:00</p>
+                            <p class="card-text">End: 20:00:00</p>
+                            <p class="card-text">Machine Group: Erskine-033, Erskine-035</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col pr-0">
+                    <div class="mb-2 h4">
+                        Tuesday
+                    </div>
+
+                    <div class="card bg-light mb-3">
+                        <div class="card-header">EMTH118-20S2 Tuesday</div>
+                        <div class="card-body">
+                            <p class="card-text">Start: 16:00:00</p>
+                            <p class="card-text">End: 18:00:00</p>
+                            <p class="card-text">Machine Group: Erskine-033, Erskine-035</p>
+                        </div>
+                    </div>
+
+                    <div class="card bg-light mb-3">
+                        <div class="card-header">EMTH119-20S2 Tuesday</div>
+                        <div class="card-body">
+                            <p class="card-text">Start: 18:00:00</p>
+                            <p class="card-text">End: 20:00:00</p>
+                            <p class="card-text">Machine Group: Erskine-033, Erskine-035</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col pr-0">
+                    <div class="mb-2 h4">
+                        Wednesday
+                    </div>
+
+                    <div>
+                        No events.
+                    </div>
+                </div>
+
+                <div class="col pr-0">
+                    <div class="mb-2 h4">
+                        Thursday
+                    </div>
+
+                    <div>
+                        No events.
+                    </div>
+                </div>
+
+                <div class="col pr-0">
+                    <div class="mb-2 h4">
+                        Friday
+                    </div>
+
+                    <div class="card bg-light mb-3">
+                        <div class="card-header">EMTH119-20S2 Friday</div>
+                        <div class="card-body">
+                            <p class="card-text">Start: 18:00:00</p>
+                            <p class="card-text">End: 20:00:00</p>
+                            <p class="card-text">Machine Group: Erskine-033, Erskine-035</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col pr-0">
+                    <div class="mb-2 h4">
+                        Saturday
+                    </div>
+
+                    <div>
+                        No events.
+                    </div>
+                </div>
+
                 <div class="col">
-                    Weekly Events
+                    <div class="mb-2 h4">
+                        Sunday
+                    </div>
+
+                    <div>
+                        No events.
+                    </div>
                 </div>
             </div>
         </div>
