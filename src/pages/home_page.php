@@ -7,11 +7,13 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
               integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
               crossorigin="anonymous" />
+        <!-- linking style sheet -->
         <link rel="stylesheet" href="stylesheet.css">
     </head>
 
     <body>
         <ul>
+            <li><img class="logo" src="UC logo.png"></li>
             <li><a class="active" href="#home_page">Home</a></li>
             <li><a href="#current_events">Current Events</a></li>
         </ul>

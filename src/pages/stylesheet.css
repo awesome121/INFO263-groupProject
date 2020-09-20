@@ -20,8 +20,9 @@ li a{
     display:block;
     color: white;
     text-align: center;
-    padding:14px 16px;
-    test-decoration: none;
+    padding:30px 16px;
+    height: 80px;
+    text-decoration: none;
 }
 li a:hover{
     text-decoration: none;
@@ -34,4 +35,11 @@ li a:hover:not(.active){
     background-color: #CC0011;
     text-decoration: none;
     color: black;
+}
+/*logo looks weird may need to take out*/
+.logo{
+    display: inline-block;
+    vertical-align: top;
+    width: 80px;
+    height: 80px;
 }
