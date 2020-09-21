@@ -9,7 +9,7 @@
 
     <body>
         <!-- Header -->
-        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #999999;">
+        <div class="navbar navbar-expand-lg navbar-dark" style="background-color: #999999;">
             <!-- Logo -->
             <a class="navbar-brand" href="#">
                 <img src="../images/UC_logo.png" height="50">
@@ -43,7 +43,7 @@
                 <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-dark" type="submit">Search</button>
             </form>
-        </nav>
+        </div>
 
         <div class="container-fluid">
             <div class="row mt-3">
