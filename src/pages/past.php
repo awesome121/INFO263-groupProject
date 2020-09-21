@@ -78,7 +78,7 @@
             }
 
             //shows events that have happened in the past ordered by date descending
-            $query = "call $acct.show_events_past()";
+            $query = "call show_events_past()";
             $result = $conn->query($query);
             //Test the query was completed without error
             if($conn->error){
