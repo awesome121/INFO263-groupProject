@@ -33,17 +33,17 @@
 
         <!--Reworked Form Code-->
         <div class="container-fluid row text-center">
-                <div class="col text-center">
-                    <div class="info-form">
-                        <form method="POST" action="login_page.php">
-                                <input type="text" name="username" placeholder="Username" autocomplete="on"
-                                       required="required"><br>
-                                <input type="password" class="password mt-2" name="password" placeholder="Password" required="required"
-                                       minlength="6"><br>
-                                <button type="button" class="btn btn-secondary mt-3" value="login" >Login</button>
-                        </form>
-                    </div>
+            <div class="col text-center">
+                <div class="info-form">
+                    <form method="POST" action="login_page.php">
+                            <input type="text" name="username" placeholder="Username" autocomplete="on"
+                                   required="required"><br>
+                            <input type="password" class="password mt-2" name="password" placeholder="Password" required="required"
+                                   minlength="6"><br>
+                            <button type="button" class="btn btn-secondary mt-3" value="login" >Login</button>
+                    </form>
                 </div>
+            </div>
         </div>
 
     </body>
