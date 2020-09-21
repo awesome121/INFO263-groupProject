@@ -36,7 +36,6 @@
                 <div class="col text-center">
                     <div class="info-form">
                         <form method="POST" action="login_page.php">
-
                                 <input type="text" name="username" placeholder="Username" autocomplete="on"
                                        required="required"><br>
                                 <input type="password" class="password mt-2" name="password" placeholder="Password" required="required"
