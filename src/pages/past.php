@@ -6,10 +6,25 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
     </head>
-
-    <body>
+    <!--probably should put in styles CSS doc-->
+    <style>
+        table:
+        text-align: left;
+        position: relative;
+        th{
+            text-align: left;
+            vertical-align: text-top;
+            position: sticky;
+            top: 0;
+        }
+        table tbody{
+            overflow: auto;
+        }
+    </style>
+<body>
+    <div>
         <!-- Header -->
-        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #999999;">
+        <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #999999;">
             <!-- Logo -->
             <a class="navbar-brand" href="#">
                 <img src="../images/UC_logo.png" height="50">
@@ -45,12 +60,13 @@
             </form>
         </nav>
 
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col">
 
                 </div>
             </div>
+            <!--</div>-->
             <!-- Constatines database code from the help session -->
             <?
             //Open database connection and run the query
@@ -61,9 +77,8 @@
                 die("Fatal error: " . $conn->connect_error);
             }
 
-
             //shows events that have happened in the past ordered by date descending
-            $query = "call INFO263_lcs57_tserver.show_events_past()";
+            $query = "call $acct.show_events_past()";
             $result = $conn->query($query);
             //Test the query was completed without error
             if($conn->error){
@@ -81,28 +96,35 @@
             //debugging code
             //echo "<pre>" .print_r($field_names, true) . "</pre>"
             ?>
+            <div class="table-responsive">
+                <table class="table">
 
-            <table>
-                <tr>
-                    <?
-                    //output the headers
-                    for($i = 0; $i < sizeof($field_names); ++$i){
-                        echo "<th>" . htmlspecialchars($field_names[$i]). "</th>";
-                    }
-                    ?>
-                </tr>
-                <?
-                $num_rows = $result->num_rows;
-                for($j = 0; $j < $num_rows; ++$j){
-                    $row = $result->fetch_array(MYSQLI_ASSOC);
-                    echo "<tr>";
-                    for($k = 0; $k < sizeof($field_names); ++$k){
-                        echo "<td>" . htmlspecialchars($row[$field_names[$k]]) . "</td>";
-                    }
-                    echo "</tr>";
-                }
-                ?>
-            </table>
+                    <thead class="sticky-top">
+                        <tr>
+                            <?
+                            //output the headers
+
+                            for($i = 0; $i < sizeof($field_names); ++$i){
+                                echo "<th scope = 'col'><p>" . htmlspecialchars(ucwords(str_replace("_", " ", $field_names[$i]))). "</p></th>";
+                            }
+                            ?>
+                        </tr>
+                        <tbody>
+                        <?
+                        $num_rows = $result->num_rows;
+                        for($j = 0; $j < $num_rows; ++$j){
+                            $row = $result->fetch_array(MYSQLI_ASSOC);
+                            echo "<trs scope='row'>";
+                            for($k = 0; $k < sizeof($field_names); ++$k){
+                                echo "<td>" . htmlspecialchars($row[$field_names[$k]]) . "</td>";
+                            }
+                            echo "</tr>";
+                        }
+                        ?>
+                        </tbody>
+                    </thead>
+                </table>
+            </div>
 
             <?
             $result->close();
@@ -117,5 +139,6 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    </body>
+    </div>
+</body>
 </html>
