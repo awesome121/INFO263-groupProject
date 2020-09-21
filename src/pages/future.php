@@ -9,7 +9,7 @@
 
     <body>
         <!-- Header -->
-        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #999999;">
+        <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #999999;">
             <!-- Logo -->
             <a class="navbar-brand" href="#">
                 <img src="../images/UC_logo.png" height="50">
