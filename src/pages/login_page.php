@@ -44,6 +44,7 @@ if($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
 $user_info = verifyAccount($conn);
 if ($_POST["input_username"] != "" && $_POST["input_password"] != "") {
     if ($user_info != NULL) {
+        $conn-> close();
         header("Location: home.php");
     } else {
         print_r("Invalid username or password");
