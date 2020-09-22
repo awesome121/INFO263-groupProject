@@ -9,7 +9,7 @@
     </head>
 
     <body>
-        <!-- Logo -->
+        <!-- UC Logo -->
         <div>
             <a class="container-fluid row text-center mt-4 mb-3"  href="#">
                 <img src="../images/UC_logo.png" class="rounded mx-auto d-block" height="150">
@@ -35,21 +35,24 @@
 </html>
 
 
-<?php
 
+
+<?php
 require_once('../db_config.php');
-$conn = new mysqli($hostname, $username, $password, $database);
+$conn = new mysqli($hostname, $username, $password, $database); // New database connection
 if($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
 $user_info = verifyAccount($conn);
 if ($_POST["input_username"] != "" && $_POST["input_password"] != "") {
-    if ($user_info != "") {
+    if ($user_info != NULL) {
         header("Location: home.php");
     } else {
         print_r("Invalid username or password");
     }
 }
 
-
+// A function to verify user's input username and password
+// Return username, email and fullname in an array for information display in the later pages
+// Reuturn NULL if it's invalid input username or password 
 function verifyAccount($conn) {
     $query = "call get_user();";
     $result = mysqli_query($conn, $query);
@@ -60,11 +63,11 @@ function verifyAccount($conn) {
         if ($input_username==$row[0] && $input_password==$row[1]) {
             $email = $row[2];
             $fullName = $row[3];
-            return array($email, $fullName);
+            return array($input_username, $email, $fullName);
         }
         $row = mysqli_fetch_row($result);
     }
-    return "";
+    return NULL;
 }
 
 ?>
