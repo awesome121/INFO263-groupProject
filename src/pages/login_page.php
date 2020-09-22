@@ -52,7 +52,7 @@ if ($_POST["input_username"] != "" && $_POST["input_password"] != "") {
 
 // A function to verify user's input username and password
 // Return username, email and fullname in an array for information display in the later pages
-// Reuturn NULL if it's invalid input username or password 
+// Return NULL if it's invalid input username or password 
 function verifyAccount($conn) {
     $query = "call get_user();";
     $result = mysqli_query($conn, $query);
