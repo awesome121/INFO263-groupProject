@@ -53,6 +53,36 @@
             </div>
         </div>
 
+        <main>
+            <link
+                href="style.css"
+                rel="stylesheet">
+
+            <form class="form-style-9">
+                <ul>
+                    <li>
+                      <label for="field1"><span>Subject</span><input type="text" name="field1" class="field-style field-split align-left" placeholder="e.g: INFO263" /></label><br>
+                     <label for="field2"<span>Date</span><input type="date" name="field2" class="field-style field-split align-right" placeholder="Date"/></label><br>
+
+                    </li>
+                    <li>
+                        Start: <input type="time" name="field3" class="field-style field-split align-left" placeholder="Start Time" /><br>
+                        End: <input type="time" name="field4" class="field-style field-split align-right" placeholder="End Time" />
+                    </li>
+                    <li>
+                        <input type="text" name="field3" class="field-style field-full align-none" placeholder="Location" />
+                    </li>
+                    <li>
+                        <textarea name="field5" class="field-style" placeholder="Note"></textarea>
+                    </li>
+                    <li>
+                        <input type="submit" value="Save" />
+                    </li>
+                </ul>
+            </form>
+        </main>
+
+
         <!-- Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
