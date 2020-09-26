@@ -58,28 +58,31 @@
                 href="style.css"
                 rel="stylesheet">
 
-            <form class="form-style-9">
-                <ul>
-                    <li>
-                      <label for="field1"><span>Subject</span><input type="text" name="field1" class="field-style field-split align-left" placeholder="e.g: INFO263" /></label><br>
-                     <label for="field2"<span>Date</span><input type="date" name="field2" class="field-style field-split align-right" placeholder="Date"/></label><br>
 
+
+
+            <form class="form-style-9">
+                <div class="form-style-9-heading">Create new event</div>
+                <ul>
+                    <li><label for="field1"><span>Subject</span><input type="text" name="field1" class="field-style field-full" placeholder="e.g: INFO263" /></label></li>
+                        <li><label for="field2"><span>Date</span><input type="date" name="field2" class="field-style field-try" placeholder="Date" /></label>
+                    </li>
+
+
+                    <li><label for="field3"><span>Start Time</span><input type="time" name="field3" class="field-style field-full" placeholder="Start Time" /><br>
+                        <label for="field4"><span>End Time</span><input type="time" name="field4" class="field-style field-full" placeholder="End Time" /></li>
+                    <li>
+                        <label for="field6"><span>Location</span><input type="text" name="field6" class="field-style field-full align-none" placeholder="Location" />
                     </li>
                     <li>
-                        Start: <input type="time" name="field3" class="field-style field-split align-left" placeholder="Start Time" /><br>
-                        End: <input type="time" name="field4" class="field-style field-split align-right" placeholder="End Time" />
-                    </li>
-                    <li>
-                        <input type="text" name="field3" class="field-style field-full align-none" placeholder="Location" />
-                    </li>
-                    <li>
-                        <textarea name="field5" class="field-style" placeholder="Note"></textarea>
+                        <label for="field5"><span>Note</span><textarea name="field5" class="field-style" placeholder="Note"></textarea>
                     </li>
                     <li>
                         <input type="submit" value="Save" />
                     </li>
                 </ul>
             </form>
+
         </main>
 
 
