@@ -1,7 +1,8 @@
-USE `INFO263_cgo54_tserver`; /********** Please change your database name *********/
+USE `INFO263_lcs57_tserver`; /********** Please change your database name *********/
 DROP table IF EXISTS `front_user`;
 DROP procedure IF EXISTS `get_user`;
 DROP procedure IF EXISTS `show_events_past`;
+DROP procedure IF EXISTS `show_events_future`;
 
 
 
@@ -30,7 +31,15 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE `show_events_past`()
 BEGIN
-SELECT * FROM vw_front_event WHERE date <= curdate() AND date >= "2020/01/01" ORDER BY date DESC;
+SELECT * FROM vw_front_event WHERE date <= curdate() ORDER BY date DESC;
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `show_events_future`()
+BEGIN
+SELECT * FROM vw_front_event WHERE date >= curdate() ORDER BY date ASC;
 END$$
 
 DELIMITER ;

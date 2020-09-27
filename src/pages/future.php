@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Create Event - TServer</title>
+        <title>Future Events - TServer</title>
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
     </head>
 
+    <!--probably should put in styles CSS doc-->
+    <style>
+        th.sticky-header {
+            position: sticky;
+            top: 0;
+            z-index:10;
+            background-color:white;
+        }
+        table{
+            height: 640px;
+        }
+        h2{
+            padding: 10px;
+
+        }
+    </style>
     <body>
         <!-- Header -->
         <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #999999;">
@@ -45,13 +61,75 @@
             </form>
         </nav>
 
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    Content
-                </div>
+        <div class="container-fluid">
             </div>
-        </div>
+            <!-- Table based off of Constantine's help session -->
+            <?
+            //Open database connection and run the query
+            require_once('../db_config.php');
+            $conn = new mysqli($hostname, $username, $password, $database);
+            //Test the connection and run the query
+            if($conn->connect_error){
+                die("Fatal error: " . $conn->connect_error);
+            }
+
+            //shows events that have happened in the past ordered by date descending
+            $query = "call show_events_future()";
+            $result = $conn->query($query);
+            //Test the query was completed without error
+            if($conn->error){
+                die("Fatal error: " . $conn->error);
+            }
+
+            $fields = $result->fetch_fields();
+            $field_names = [];
+            while($field = $result->fetch_field()){
+                $field_names[] = $field->name;
+            }
+            $num_rows = $result->num_rows;
+            //checks to see if there are any future events
+            if ($num_rows == 0) {
+                echo "<h2>There are no future events.</h2>";
+            }
+            else{
+                ?>
+                <div class="table">
+                    <table class="table table-responsive">
+
+                        <thead>
+
+                        <?
+                        //output the headers
+
+                        for($i = 0; $i < sizeof($field_names); ++$i){
+                            echo "<th class='sticky-header' scope ='col'><p>" . htmlspecialchars(ucwords(str_replace("_", " ", $field_names[$i]))). "</p></th>";
+                        }
+                        ?>
+
+                        </thead>
+                        <tbody>
+                        <?
+                        for($j = 0; $j < $num_rows; ++$j){
+                            $row = $result->fetch_array(MYSQLI_ASSOC);
+                            echo "<tr scope='row' class='active'>";
+                            for($k = 0; $k < sizeof($field_names); ++$k){
+                                echo "<td>" . htmlspecialchars($row[$field_names[$k]]) . "</td>";
+                            }
+                            echo "</tr>";}
+
+                        ?>
+                        </tbody>
+                    </table>
+
+                    <?
+                }
+                ?>
+            </div>
+            <!-- closing open connections-->
+            <?
+            $result->close();
+            $conn-> close();
+            ?>
 
         <!-- Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

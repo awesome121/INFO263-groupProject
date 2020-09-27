@@ -6,23 +6,20 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
     </head>
+
     <!--probably should put in styles CSS doc-->
     <style>
-        table:
-        text-align: left;
-        position: relative;
-        th{
-            text-align: left;
-            vertical-align: text-top;
-            position: sticky;
-            top: 0;
-        }
-        table tbody{
-            overflow: auto;
+       th.sticky-header {
+           position: sticky;
+           top: 0;
+           z-index:10;
+           background-color:white;
+       }
+       table{
+            height: 640px;
         }
     </style>
-<body>
-    <div>
+    <body>
         <!-- Header -->
         <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #999999;">
             <!-- Logo -->
@@ -61,13 +58,7 @@
         </nav>
 
         <div class="container-fluid">
-            <div class="row">
-                <div class="col">
-
-                </div>
-            </div>
-            <!--</div>-->
-            <!-- Constatines database code from the help session -->
+            <!-- Table based off of Constantine's help session -->
             <?
             //Open database connection and run the query
             require_once('../db_config.php');
@@ -85,47 +76,41 @@
                 die("Fatal error: " . $conn->error);
             }
 
-            //debugging code
-            //echo "<pre>" .print_r($result->fetch_fields(), true) . "</pre>"
-
             $fields = $result->fetch_fields();
             $field_names = [];
             while($field = $result->fetch_field()){
                 $field_names[] = $field->name;
             }
-            //debugging code
-            //echo "<pre>" .print_r($field_names, true) . "</pre>"
             ?>
-            <div class="table-responsive">
-                <table class="table">
+            <div class="table">
+                <table class="table table-responsive">
 
-                    <thead class="sticky-top">
-                        <tr>
-                            <?
-                            //output the headers
+                    <thead>
 
-                            for($i = 0; $i < sizeof($field_names); ++$i){
-                                echo "<th scope = 'col'><p>" . htmlspecialchars(ucwords(str_replace("_", " ", $field_names[$i]))). "</p></th>";
-                            }
-                            ?>
-                        </tr>
-                        <tbody>
+                        <?
+                        //output the headers
+
+                        for($i = 0; $i < sizeof($field_names); ++$i){
+                            echo "<th class='sticky-header' scope ='col'><p>" . htmlspecialchars(ucwords(str_replace("_", " ", $field_names[$i]))). "</p></th>";
+                        }
+                        ?>
+
+                    </thead>
+                    <tbody>
                         <?
                         $num_rows = $result->num_rows;
                         for($j = 0; $j < $num_rows; ++$j){
                             $row = $result->fetch_array(MYSQLI_ASSOC);
-                            echo "<trs scope='row'>";
+                            echo "<tr scope='row' class='active'>";
                             for($k = 0; $k < sizeof($field_names); ++$k){
                                 echo "<td>" . htmlspecialchars($row[$field_names[$k]]) . "</td>";
                             }
-                            echo "</tr>";
-                        }
+                            echo "</tr>";}
                         ?>
-                        </tbody>
-                    </thead>
+                    </tbody>
                 </table>
             </div>
-
+            <!-- closing open connections-->
             <?
             $result->close();
             $conn-> close();
@@ -137,6 +122,5 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    </div>
-</body>
+    </body>
 </html>
