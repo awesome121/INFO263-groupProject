@@ -8,7 +8,7 @@
               integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
               crossorigin="anonymous" />
         <!-- linking style sheet -->
-        <link rel="stylesheet" href="stylesheet.css">
+        <link rel="stylesheet" href="../css/stylesheet.css">
     </head>
 
     <body>

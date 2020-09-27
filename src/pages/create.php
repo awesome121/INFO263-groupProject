@@ -55,7 +55,7 @@
 
         <main>
             <link
-                href="style.css"
+                href="../css/style.css"
                 rel="stylesheet">
 
 
