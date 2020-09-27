@@ -63,11 +63,11 @@
 
                     <form method="POST" action="#">
                         <div class="form-group">
-                            <input class="form-control<?php $login_error ? print_r(' is-invalid') : print_r('') ?>" type="text" name="username" placeholder="Username" required>
+                            <input class="form-control<?php $login_error ? print_r(' is-invalid') : print_r('') ?>" type="text" name="input_username" placeholder="Username" required>
                         </div>
 
                         <div class="form-group">
-                            <input class="form-control<?php $login_error ? print_r(' is-invalid') : print_r('') ?>" type="password" name="password" placeholder="Password" required>
+                            <input class="form-control<?php $login_error ? print_r(' is-invalid') : print_r('') ?>" type="password" name="input_password" placeholder="Password" required>
 
                             <div class="invalid-feedback">
                                 <?php print_r($login_error) ?>
