@@ -6,7 +6,7 @@ UC Grey (light): #CCCCCC
 UC Black: #000000 - which is just black
  */
 
-ul{
+/*ul{
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -38,7 +38,7 @@ li a:hover:not(.active){
     color: white;
 }
 /*logo looks weird may need to take out*/
-.logo{
+/*.logo{
     display: inline-block;
     vertical-align: top;
     width: 80px;
@@ -73,4 +73,18 @@ h1{
 .button:hover {
     background-color: #CCCCCC;
     color: white;
+}*/
+
+/*styles for table on past & future page*/
+th.sticky-header {
+    position: sticky;
+    top: 0;
+    z-index:10;
+    background-color:white;
+}
+table{
+    height: 640px;
+}
+h2{
+    padding:10px;
 }

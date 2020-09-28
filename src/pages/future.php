@@ -5,9 +5,10 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+        <link href="../css/stylesheet.css" rel="stylesheet" type="text/css"/>
     </head>
 
-    <!--probably should put in styles CSS doc-->
+    <!--probably should put in styles CSS doc
     <style>
         th.sticky-header {
             position: sticky;
@@ -20,9 +21,8 @@
         }
         h2{
             padding: 10px;
-
         }
-    </style>
+    </style>-->
     <body>
         <!-- Header -->
         <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #999999;">

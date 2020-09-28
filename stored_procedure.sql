@@ -31,7 +31,7 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE `show_events_past`()
 BEGIN
-SELECT * FROM vw_front_event WHERE date <= curdate() ORDER BY date DESC;
+SELECT * FROM vw_front_event WHERE date <= curdate() AND date >= 01/01/2019 ORDER BY date DESC;
 END$$
 
 DELIMITER ;

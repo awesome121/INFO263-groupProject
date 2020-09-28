@@ -1,12 +1,13 @@
+/*Create event page styles*/
 .form-style-9{
-                          max-width: 450px;
-                          background: #FAFAFA;
-                          padding: 30px;
-                          margin: 50px auto;
-                          box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
-                          border-radius: 10px;
-                          border: 6px solid #305A72;
-                      }
+      max-width: 450px;
+      background: #FAFAFA;
+      padding: 30px;
+      margin: 50px auto;
+      box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+      border-radius: 10px;
+      border: 6px solid #305A72;
+}
 .form-style-9 ul{
     padding:0;
     margin:0;
@@ -67,4 +68,19 @@
 .form-style-9 ul li input[type="submit"]:hover {
     background: linear-gradient(to bottom, #2D77A2 5%, #337DA8 100%);
     background-color: #28739E;
+}
+
+/*styles for table on past & future page
+Note this isn't currently working and I'm not sure why - Leilani*/
+th.sticky-header {
+    position: sticky;
+    top: 0;
+    z-index:10;
+    background-color:white;
+}
+table{
+    height: 640px;
+}
+h2{
+    padding: 10px;
 }

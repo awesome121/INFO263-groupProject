@@ -5,22 +5,24 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+        <link href="../css/stylesheet.css" rel="stylesheet" type="text/css"/>
     </head>
 
     <!--probably should put in styles CSS doc-->
-    <style>
-       th.sticky-header {
-           position: sticky;
-           top: 0;
-           z-index:10;
-           background-color:white;
-       }
-       table{
+    <!--<style>
+        th.sticky-header {
+            position: sticky;
+            top: 0;
+            z-index:10;
+            background-color:white;
+        }
+        table{
             height: 640px;
         }
-    </style>
+    </style>-->
     <body>
         <!-- Header -->
+
         <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #999999;">
             <!-- Logo -->
             <a class="navbar-brand" href="#">
