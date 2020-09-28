@@ -7,43 +7,36 @@
         die("Connection failed: " . $conn->connect_error);
     };
 
-    $user_info = verifyAccount($conn);
+$user_info = verifyAccount($conn);
+if ($_POST["input_username"] != "" && $_POST["input_password"] != "") {
+    if ($user_info != NULL) {
+        header("Location: home.php?");
+    } else {
+//        session_start();
+//        $_SESSION["user_info"] = $user_info;
+        print_r("Invalid username or password");
+    }
+}
 
-    if ($_POST["input_username"] != "" && $_POST["input_password"] != "") {
-        if ($user_info != NULL) {
-            $conn-> close();
-            
-            header("Location: home.php");
-        } else {
-            $login_error = "Invalid username or password";
-        };
-    };
-
-    // A function to verify user's input username and password
-    // Return username, email and fullname in an array for information display in the later pages
-    // Return NULL if it's invalid input username or password 
-    function verifyAccount($conn) {
-        $query = "call get_user();";
-
-        $result = mysqli_query($conn, $query);
-
-        $input_username = $_POST["input_username"];
-        $input_password = $_POST["input_password"];
-
+// A function to verify user's input username and password
+// Return username, email and fullname in an array for information display in the later pages
+// Return NULL if it's invalid input username or password
+function verifyAccount($conn) {
+    $query = "call get_user();";
+    $result = mysqli_query($conn, $query);
+    $input_username = $_POST["input_username"];
+    $input_password = $_POST["input_password"];
+    $row = mysqli_fetch_row($result);
+    while($row != NULL){
+        if ($input_username==$row[0] && $input_password==$row[1]) {
+            $email = $row[2];
+            $fullName = $row[3];
+            return array($conn, $input_username, $email, $fullName);
+        }
         $row = mysqli_fetch_row($result);
-
-        while($row != NULL){
-            if ($input_username==$row[0] && $input_password==$row[1]) {
-                $email = $row[2];
-                $fullName = $row[3];
-                return array($input_username, $email, $fullName);
-            };
-
-            $row = mysqli_fetch_row($result);
-        };
-
-        return NULL;
-    };
+    }
+    return NULL;
+}
 ?>
 
 <html class="h-100">
