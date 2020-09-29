@@ -22,7 +22,7 @@
 
 function showResult(keyword) {
 
-    if (keyword.toString() == "") {
+    if (keyword.toString().length < 3) {
         while (document.getElementById("hint").children.length != 0)
             document.getElementById("hint").children.item(0).remove();
         return;
