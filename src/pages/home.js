@@ -33,12 +33,19 @@ function showResult(keyword) {
                 var parser = new DOMParser();
                 var responseDoc = parser.parseFromString(this.responseText, "text/html")
                 document.getElementById("hint").innerHTML = responseDoc.getElementById("hint").innerHTML;
+                // document.getElementById("myDropdown").classList.toggle("show");
             }
         }
         xmlhttp.open("GET", "home.php?keywords=" + keyword, true);
         xmlhttp.send();
     }
 }
+
+document.addEventListener("click", function (event) {
+    console.log(event);
+});
+
+
 
 
 document.getElementById("myDropdown").classList.toggle("show");

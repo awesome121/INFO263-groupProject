@@ -1,19 +1,68 @@
 #myInput {
+    alignment: bottom;
     box-sizing: border-box;
     background-image: url('../images/searchicon.png');
     background-position: 14px 12px;
     background-repeat: no-repeat;
     font-size: 16px;
-    padding: 7px 20px 12px 45px;
+    padding: 12px 10px 8px 45px;
     border: none;
     border-bottom: 1px solid #ddd;
+    z-index: 2;
+    height: 39px;
 }
 
 #myInput:focus {outline: 3px solid #ddd;}
 
 .dropdown {
+    float: right;
     position: relative;
     display: inline-block;
+    z-index: 2;
+}
+
+#search {
+    padding-left: 400px;
+    padding-top: -0px;
+    font-family: "serif";
+    color: gray;
+    position: absolute;
+    z-index: 2;
+}
+
+#logout {
+    right: 10px;
+    position: absolute;
+}
+
+#calendar {
+    background-color: darkgray;
+    /*padding-top: 10px;*/
+    position: -webkit-sticky;
+    position: sticky;
+    top: 78px;
+    border-width: 0px;
+    z-index: 1;
+}
+#sticker {
+    background-color: darkgray;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+}
+#weekdays {
+    margin-top: 0px;
+    background-color: darkgray;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 115px;
+    z-index: 1;
+}
+
+#nav_bar{
+    padding-bottom: 10px;
+    background-color: darkgray;
 }
 
 .dropdown-content {

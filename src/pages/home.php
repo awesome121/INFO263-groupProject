@@ -38,7 +38,8 @@ if (sizeof($hint) == 7) {
 
     <body>
         <!-- Header -->
-        <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #999999;">
+        <div id="sticker">
+        <nav id="nav_bar" class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #999999;">
             <!-- Logo -->
             <a class="navbar-brand" href="#">
                 <img src="../images/UC_logo.png" height="50">
@@ -62,32 +63,33 @@ if (sizeof($hint) == 7) {
                     <a class="nav-link" href="past.php">Past Events</a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item" id="logout">
                     <a class="nav-link" href="login.php">Logout</a>
                 </li>
 
                 <!-- Search -->
-                <div class="dropdown">
-                    <div id="myDropdown" class="dropdown-content">
-                        <input type="text" placeholder="Type an event name.." id="myInput", onkeyup="showResult(this.value)">
-                        <!--                    <a href="#about">About</a>-->
-                        <div id="hint">
-                            <?php
+                <li class="nav-item" id="search">
+                    <a class="dropdown">
+                        <div id="myDropdown" class="dropdown-content">
+                            <input type="text" placeholder="Type an event name.." id="myInput" ,
+                                   onkeyup="showResult(this.value)">
+                            <div id="hint">
+                                <?php
+                                if ($keywords != "" and sizeof($hint) == 0) {
+                                    echo "<a>No Suggestion</a>";
+                                } else {
+                                    foreach ($hint as $key => $value)
+                                        echo " <a>{$value}</a> ";
 
-                            if ($keywords != "" and sizeof($hint)==0) {
-                                echo "<a>No Suggestion</a>";
-                            } else {
-                                foreach($hint as $key => $value)
-                                    echo " <a>{$value}</a> ";
-
-                            } ?> </div>
-                    </div>
-                </div>
+                                } ?> </div>
+                        </div>
+                    </a>
+                </li>
             </ul>
         </nav>
 
-        <div class="container-fluid">
-            <div class="row mt-3">
+
+        <div id="calendar" class="row mt-3" >
                 <div class="col">
                     <button type="button" class="btn btn-secondary"><</button>
                     <span class="h4">14/09/2020 - 20/09/2020</span> <!-- insert current date -->
@@ -95,11 +97,57 @@ if (sizeof($hint) == 7) {
                 </div>
             </div>
 
-            <div class="row mt-2">
+        <div id="weekdays" class="row mt-2">
                 <div class="col pr-0">
-                    <div class="mb-2 h4">
+                    <div class="mb-2 h4" style="text-align: center">
                         Monday
                     </div>
+                </div>
+
+                <div class="col pr-0">
+                    <div class="mb-2 h4" style="text-align: center">
+                        Tuesday
+                    </div>
+                </div>
+
+                <div class="col pr-0">
+                    <div class="mb-2 h4" style="text-align: center">
+                        Wednesday
+                    </div>
+                </div>
+
+                <div class="col pr-0">
+                    <div class="mb-2 h4" style="text-align: center">
+                        Thursday
+                    </div>
+                </div>
+
+                <div class="col pr-0">
+                    <div class="mb-2 h4" style="text-align: center">
+                        Friday
+                    </div>
+                </div>
+
+                <div class="col pr-0">
+                    <div class="mb-2 h4" style="text-align: center">
+                        Saturday
+                    </div>
+                </div>
+
+                <div class="col pr-0">
+                    <div class="mb-2 h4" style="text-align: center">
+                        Sunday
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="mainFrame" class="container-fluid">
+            <div class="row mt-2">
+
+                <div class="col pr-0">
 
                     <div class="card bg-light mb-3">
                         <div class="card-header">EMTH119-20S2 Monday</div>
@@ -112,9 +160,7 @@ if (sizeof($hint) == 7) {
                 </div>
 
                 <div class="col pr-0">
-                    <div class="mb-2 h4">
-                        Tuesday
-                    </div>
+
 
                     <div class="card bg-light mb-3">
                         <div class="card-header">EMTH118-20S2 Tuesday</div>
@@ -136,30 +182,18 @@ if (sizeof($hint) == 7) {
                 </div>
 
                 <div class="col pr-0">
-                    <div class="mb-2 h4">
-                        Wednesday
-                    </div>
-
                     <div>
                         No events.
                     </div>
                 </div>
 
                 <div class="col pr-0">
-                    <div class="mb-2 h4">
-                        Thursday
-                    </div>
-
                     <div>
                         No events.
                     </div>
                 </div>
 
                 <div class="col pr-0">
-                    <div class="mb-2 h4">
-                        Friday
-                    </div>
-
                     <div class="card bg-light mb-3">
                         <div class="card-header">EMTH119-20S2 Friday</div>
                         <div class="card-body">
@@ -171,28 +205,18 @@ if (sizeof($hint) == 7) {
                 </div>
 
                 <div class="col pr-0">
-                    <div class="mb-2 h4">
-                        Saturday
-                    </div>
-
                     <div>
                         No events.
                     </div>
                 </div>
 
                 <div class="col">
-                    <div class="mb-2 h4">
-                        Sunday
-                    </div>
-
                     <div>
                         No events.
                     </div>
                 </div>
             </div>
         </div>
-
-
         <!-- Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
