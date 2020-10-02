@@ -3,7 +3,7 @@ require_once('../db_config.php');
 $conn = new mysqli($hostname, $username, $password, $database); // New database connection
 $keywords = $_GET['keywords'];
 $hint = array();
-$query = "call t_server.show_events_past();";
+$query = "call show_events_past();";
 $result1 = mysqli_query($conn, $query);
 $row = mysqli_fetch_row($result1);
 while ($keywords != "" and $row != NULL and sizeof($hint) < 7) {
@@ -12,6 +12,18 @@ while ($keywords != "" and $row != NULL and sizeof($hint) < 7) {
     }
     $row = mysqli_fetch_row($result1);
 }
+
+$conn = new mysqli($hostname, $username, $password, $database); // New database connection
+$week_events = array();
+//$query = "call show_week_events({$_GET['start_date']}, {$_GET['end_date']});";
+$query = "call INFO263_cgo54_tserver.show_week_events('2020-05-11', '2020-05-17');";
+$result2 = mysqli_query($conn, $query);
+$row = mysqli_fetch_row($result2);
+while ($row != NULL) {
+    array_push($week_events, $row);
+    $row = mysqli_fetch_row($result2);
+}
+
 //$query = "call t_server.show_events_future();";
 //$result2 = mysqli_query($conn, $query);
 //$row = mysqli_fetch_row($result2);
@@ -24,6 +36,7 @@ while ($keywords != "" and $row != NULL and sizeof($hint) < 7) {
 if (sizeof($hint) == 7) {
     array_push($hint, ". . . . . . .");
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -148,75 +161,189 @@ if (sizeof($hint) == 7) {
             <div class="row mt-2">
 
                 <div class="col pr-0">
+                    <?php
+                    $count = 0;
+                    foreach ($week_events as $row) {
+                        if ($row[14] == 1) { // Monday
+                            echo '<div class="card bg-light mb-3">';
+                            echo "<div class=\"card-header\">{$row[0]}</div>";
+                            echo "<div class=\"text-center\" >
+                            <a id=\"mondayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#monday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
+                        </div>";
+                            echo "<div class=\"collapse multi-collapse\" id=\"monday{$count}\">";
+                            echo "<div class=\"card-body\">";
+                            echo "<p class=\"card-text\">Start: {$row[6]}</p>
+                                <p class=\"card-text\">Machine Group: {$row[3]}</p>";
+                            echo '</div></div></div>';
 
-                    <div class="card bg-light mb-3">
-                        <div class="card-header">EMTH119-20S2 Monday</div>
-                        <div class="card-body">
-                            <p class="card-text">Start: 18:00:00</p>
-                            <p class="card-text">End: 20:00:00</p>
-                            <p class="card-text">Machine Group: Erskine-033, Erskine-035</p>
-                        </div>
-                    </div>
+                            $row = mysqli_fetch_row($result1);
+                            $count += 1;
+                        }
+                    }
+
+                    ?>
+
                 </div>
+
 
                 <div class="col pr-0">
 
 
-                    <div class="card bg-light mb-3">
-                        <div class="card-header">EMTH118-20S2 Tuesday</div>
-                        <div class="card-body">
-                            <p class="card-text">Start: 16:00:00</p>
-                            <p class="card-text">End: 18:00:00</p>
-                            <p class="card-text">Machine Group: Erskine-033, Erskine-035</p>
-                        </div>
-                    </div>
+                    <?php
+                    $count = 0;
+                    foreach ($week_events as $row) {
+                        if ($row[14] == 2) { // Tuesday
+                            echo '<div class="card bg-light mb-3">';
+                            echo "<div class=\"card-header\">{$row[0]}</div>";
+                            echo "<div class=\"text-center\" >
+                            <a id=\"tuesdayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#tuesday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
+                        </div>";
+                            echo "<div class=\"collapse multi-collapse\" id=\"tuesday{$count}\">";
+                            echo "<div class=\"card-body\">";
+                            echo "<p class=\"card-text\">Start: {$row[6]}</p>
+                                <p class=\"card-text\">Machine Group: {$row[3]}</p>";
+                            echo '</div></div></div>';
 
-                    <div class="card bg-light mb-3">
-                        <div class="card-header">EMTH119-20S2 Tuesday</div>
-                        <div class="card-body">
-                            <p class="card-text">Start: 18:00:00</p>
-                            <p class="card-text">End: 20:00:00</p>
-                            <p class="card-text">Machine Group: Erskine-033, Erskine-035</p>
-                        </div>
-                    </div>
+                            $row = mysqli_fetch_row($result1);
+                            $count += 1;
+                        }
+                    }
+
+                    ?>
+
+
                 </div>
 
-                <div class="col pr-0">
-                    <div>
-                        No events.
-                    </div>
-                </div>
-
-                <div class="col pr-0">
-                    <div>
-                        No events.
-                    </div>
-                </div>
 
                 <div class="col pr-0">
-                    <div class="card bg-light mb-3">
-                        <div class="card-header">EMTH119-20S2 Friday</div>
-                        <div class="card-body">
-                            <p class="card-text">Start: 18:00:00</p>
-                            <p class="card-text">End: 20:00:00</p>
-                            <p class="card-text">Machine Group: Erskine-033, Erskine-035</p>
-                        </div>
-                    </div>
+                    <?php
+                    $count = 0;
+                    foreach ($week_events as $row) {
+                        if ($row[14] == 3) { // Wednesday
+                            echo '<div class="card bg-light mb-3">';
+                            echo "<div class=\"card-header\">{$row[0]}</div>";
+                            echo "<div class=\"text-center\" >
+                            <a id=\"wednesdayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#wednesday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
+                        </div>";
+                            echo "<div class=\"collapse multi-collapse\" id=\"wednesday{$count}\">";
+                            echo "<div class=\"card-body\">";
+                            echo "<p class=\"card-text\">Start: {$row[6]}</p>
+                                <p class=\"card-text\">Machine Group: {$row[3]}</p>";
+                            echo '</div></div></div>';
+
+                            $row = mysqli_fetch_row($result1);
+                        }
+                        $count += 1;
+                    }
+
+                    ?>
                 </div>
+
 
                 <div class="col pr-0">
-                    <div>
-                        No events.
-                    </div>
+
+                    <?php
+                    $count = 0;
+                    foreach ($week_events as $row) {
+                        if ($row[14] == 4) { // Thursday
+                            echo '<div class="card bg-light mb-3">';
+                            echo "<div class=\"card-header\">{$row[0]}</div>";
+                            echo "<div class=\"text-center\" >
+                            <a id=\"thursdayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#thursday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
+                        </div>";
+                            echo "<div class=\"collapse multi-collapse\" id=\"thursday{$count}\">";
+                            echo "<div class=\"card-body\">";
+                            echo "<p class=\"card-text\">Start: {$row[6]}</p>
+                                <p class=\"card-text\">Machine Group: {$row[3]}</p>";
+                            echo '</div></div></div>';
+
+                            $row = mysqli_fetch_row($result1);
+                        }
+                        $count += 1;
+                    }
+
+                    ?>
                 </div>
 
-                <div class="col">
-                    <div>
-                        No events.
-                    </div>
+
+                <div class="col pr-0">
+                    <?php
+                    $count = 0;
+                    foreach ($week_events as $row) {
+                        if ($row[14] == 5) { // Friday
+                            echo '<div class="card bg-light mb-3">';
+                            echo "<div class=\"card-header\">{$row[0]}</div>";
+                            echo "<div class=\"text-center\" >
+                            <a id=\"fridayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#friday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
+                        </div>";
+                            echo "<div class=\"collapse multi-collapse\" id=\"friday{$count}\">";
+                            echo "<div class=\"card-body\">";
+                            echo "<p class=\"card-text\">Start: {$row[6]}</p>
+                                <p class=\"card-text\">Machine Group: {$row[3]}</p>";
+                            echo '</div></div></div>';
+
+                            $row = mysqli_fetch_row($result1);
+                        }
+                        $count += 1;
+                    }
+
+                    ?>
                 </div>
+
+
+                <div class="col pr-0">
+                    <?php
+                    $count = 0;
+                    foreach ($week_events as $row) {
+                        if ($row[14] == 6) { // Saturday
+                            echo '<div class="card bg-light mb-3">';
+                            echo "<div class=\"card-header\">{$row[0]}</div>";
+                            echo "<div class=\"text-center\" >
+                            <a id=\"saturdayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#saturday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
+                        </div>";
+                            echo "<div class=\"collapse multi-collapse\" id=\"saturday{$count}\">";
+                            echo "<div class=\"card-body\">";
+                            echo "<p class=\"card-text\">Start: {$row[6]}</p>
+                                <p class=\"card-text\">Machine Group: {$row[3]}</p>";
+                            echo '</div></div></div>';
+
+                            $row = mysqli_fetch_row($result1);
+                        }
+                        $count += 1;
+                    }
+
+                    ?>
+                </div>
+
+
+                <div class="col pr-0">
+                    <?php
+                    $count = 0;
+                    foreach ($week_events as $row) {
+                        if ($row[14] == 0) { // Sunday
+                            echo '<div class="card bg-light mb-3">';
+                            echo "<div class=\"card-header\">{$row[0]}</div>";
+                            echo "<div class=\"text-center\" >
+                            <a id=\"sundayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#sunday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
+                        </div>";
+                            echo "<div class=\"collapse multi-collapse\" id=\"sunday{$count}\">";
+                            echo "<div class=\"card-body\">";
+                            echo "<p class=\"card-text\">Start: {$row[6]}</p>
+                                <p class=\"card-text\">Machine Group: {$row[3]}</p>";
+                            echo '</div></div></div>';
+
+                            $row = mysqli_fetch_row($result1);
+                        }
+                        $count += 1;
+                    }
+
+                    ?>
+                </div>
+
+
             </div>
         </div>
+
         <!-- Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

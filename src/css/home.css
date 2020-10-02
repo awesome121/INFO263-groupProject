@@ -82,6 +82,15 @@
     display: block;
 }
 
+
+.btn-primary{
+    background: #999999;
+    text-align: center;
+    width: 250px;
+    /*padding-left: 85px;*/
+    /*padding-right: 85px;*/
+}
+
 .dropdown a:hover {background-color: #ddd;}
 
 .show {display: block;}

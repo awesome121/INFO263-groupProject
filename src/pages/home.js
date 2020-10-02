@@ -41,13 +41,28 @@ function showResult(keyword) {
     }
 }
 
-document.addEventListener("click", function (event) {
-    console.log(event);
-});
 
 
 
+
+
+
+// document.addEventListener("click", function (event) {
+//     console.log(event);
+// });
+console.log(document.getElementById("card1"));
+
+// (".btn-primary").addEventListener("click", function(){
+//     // if ()
+//     var text = document.getElementById("card1").innerText;
+//     if (text == "Show  less"){
+//         document.getElementById("card1").innerText = "Show more";
+//     } else {
+//         document.getElementById("card1").innerText = "Show less";
+//     }
+//
+// });
 
 document.getElementById("myDropdown").classList.toggle("show");
-
+console.log($('.card-header').width);
 console.log("Ready");
