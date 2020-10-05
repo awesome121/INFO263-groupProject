@@ -1,29 +1,17 @@
 <?php
-require_once('../db_config.php');
-$conn = new mysqli($hostname, $username, $password, $database); // New database connection
-$keywords = $_GET['keywords'];
-$hint = array();
-$query = "call show_events_past();";
-$result1 = mysqli_query($conn, $query);
-$row = mysqli_fetch_row($result1);
-while ($keywords != "" and $row != NULL and sizeof($hint) < 7) {
-    if (strpos(strtolower(explode(" ", $row[0])[0]), strtolower($keywords)) !== false and !array_key_exists($row[8], $hint)) {
-        $hint[$row[8]] = $row[0];
+    require_once('../db_config.php');
+    $conn = new mysqli($hostname, $username, $password, $database); // New database connection
+    $keywords = $_GET['keywords'];
+    $hint = array();
+    $query = "call show_events_past();";
+    $events = mysqli_query($conn, $query);
+    $row = mysqli_fetch_row($events);
+    while ($keywords != "" and $row != NULL and sizeof($hint) < 7) {
+        if (strpos(strtolower(explode(" ", $row[0])[0]), strtolower($keywords)) !== false and !array_key_exists($row[8], $hint)) {
+            $hint[$row[8]] = $row[0];
+        }
+        $row = mysqli_fetch_row($events);
     }
-    $row = mysqli_fetch_row($result1);
-}
-
-$conn = new mysqli($hostname, $username, $password, $database); // New database connection
-$week_events = array();
-//$query = "call show_week_events({$_GET['start_date']}, {$_GET['end_date']});";
-$query = "call INFO263_cgo54_tserver.show_week_events('2020-05-11', '2020-05-17');";
-$result2 = mysqli_query($conn, $query);
-$row = mysqli_fetch_row($result2);
-while ($row != NULL) {
-    array_push($week_events, $row);
-    $row = mysqli_fetch_row($result2);
-}
-
 //$query = "call t_server.show_events_future();";
 //$result2 = mysqli_query($conn, $query);
 //$row = mysqli_fetch_row($result2);
@@ -37,6 +25,21 @@ if (sizeof($hint) == 7) {
     array_push($hint, ". . . . . . .");
 }
 
+
+
+if (!isset($_GET['startDate'])) {
+    $_GET['startDate'] = '2020-05-11';
+    $_GET['endDate'] = '2020-05-17';
+}
+$query = "call INFO263_cgo54_tserver.show_week_events('{$_GET['startDate']}', '{$_GET['endDate']}');";
+$conn = new mysqli($hostname, $username, $password, $database); // New database connection
+$week_events = array();
+$events = mysqli_query($conn, $query);
+$row = mysqli_fetch_row($events);
+while ($row != NULL) {
+    array_push($week_events, $row);
+    $row = mysqli_fetch_row($events);
+}
 ?>
 
 <!DOCTYPE html>
@@ -85,16 +88,19 @@ if (sizeof($hint) == 7) {
                     <a class="dropdown">
                         <div id="myDropdown" class="dropdown-content">
                             <input type="text" placeholder="Type an event name.." id="myInput" ,
-                                   onkeyup="showResult(this.value)">
+                                   onkeyup="showSearchResult(this.value)">
                             <div id="hint">
                                 <?php
-                                if ($keywords != "" and sizeof($hint) == 0) {
-                                    echo "<a>No Suggestion</a>";
-                                } else {
-                                    foreach ($hint as $key => $value)
-                                        echo " <a>{$value}</a> ";
+                                if (isset($keywords)) {
+                                    if ($keywords != "" and sizeof($hint) == 0) {
+                                        echo "<a>No Suggestion</a>";
+                                    } else {
+                                        foreach ($hint as $key => $value)
+                                            echo " <a>{$value}</a> ";
 
-                                } ?> </div>
+                                    }
+                                }
+                                ?> </div>
                         </div>
                     </a>
                 </li>
@@ -104,11 +110,14 @@ if (sizeof($hint) == 7) {
 
         <div id="calendar" class="row mt-3" >
                 <div class="col">
-                    <button type="button" class="btn btn-secondary"><</button>
-                    <span class="h4">14/09/2020 - 20/09/2020</span> <!-- insert current date -->
-                    <button type="button" class="btn btn-secondary">></button>
+                    <button onclick="calendarSwitch(1)" type="button" class="btn btn-secondary"><</button>
+                    <span id="currentDate" class="h4"><?php
+                        echo $_GET['startDate'] . " - " . $_GET['endDate'];
+                    ?></span> <!-- insert current date -->
+                    <button onclick="calendarSwitch(0)" type="button" class="btn btn-secondary">></button>
                 </div>
             </div>
+
 
         <div id="weekdays" class="row mt-2">
                 <div class="col pr-0">
@@ -175,11 +184,10 @@ if (sizeof($hint) == 7) {
                             echo "<p class=\"card-text\">Start: {$row[6]}</p>
                                 <p class=\"card-text\">Machine Group: {$row[3]}</p>";
                             echo '</div></div></div>';
-
-                            $row = mysqli_fetch_row($result1);
                             $count += 1;
                         }
                     }
+
 
                     ?>
 
@@ -203,10 +211,9 @@ if (sizeof($hint) == 7) {
                             echo "<p class=\"card-text\">Start: {$row[6]}</p>
                                 <p class=\"card-text\">Machine Group: {$row[3]}</p>";
                             echo '</div></div></div>';
-
-                            $row = mysqli_fetch_row($result1);
                             $count += 1;
                         }
+
                     }
 
                     ?>
@@ -230,10 +237,9 @@ if (sizeof($hint) == 7) {
                             echo "<p class=\"card-text\">Start: {$row[6]}</p>
                                 <p class=\"card-text\">Machine Group: {$row[3]}</p>";
                             echo '</div></div></div>';
-
-                            $row = mysqli_fetch_row($result1);
+                            $count += 1;
                         }
-                        $count += 1;
+
                     }
 
                     ?>
@@ -256,10 +262,8 @@ if (sizeof($hint) == 7) {
                             echo "<p class=\"card-text\">Start: {$row[6]}</p>
                                 <p class=\"card-text\">Machine Group: {$row[3]}</p>";
                             echo '</div></div></div>';
-
-                            $row = mysqli_fetch_row($result1);
+                            $count += 1;
                         }
-                        $count += 1;
                     }
 
                     ?>
@@ -281,10 +285,8 @@ if (sizeof($hint) == 7) {
                             echo "<p class=\"card-text\">Start: {$row[6]}</p>
                                 <p class=\"card-text\">Machine Group: {$row[3]}</p>";
                             echo '</div></div></div>';
-
-                            $row = mysqli_fetch_row($result1);
+                            $count += 1;
                         }
-                        $count += 1;
                     }
 
                     ?>
@@ -306,10 +308,8 @@ if (sizeof($hint) == 7) {
                             echo "<p class=\"card-text\">Start: {$row[6]}</p>
                                 <p class=\"card-text\">Machine Group: {$row[3]}</p>";
                             echo '</div></div></div>';
-
-                            $row = mysqli_fetch_row($result1);
+                            $count += 1;
                         }
-                        $count += 1;
                     }
 
                     ?>
@@ -331,10 +331,9 @@ if (sizeof($hint) == 7) {
                             echo "<p class=\"card-text\">Start: {$row[6]}</p>
                                 <p class=\"card-text\">Machine Group: {$row[3]}</p>";
                             echo '</div></div></div>';
-
-                            $row = mysqli_fetch_row($result1);
+                            $count += 1;
                         }
-                        $count += 1;
+
                     }
 
                     ?>
