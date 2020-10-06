@@ -119,7 +119,7 @@
                                 <?php 
                                     if (isset($_POST['subject'])) {
                                         print_r('
-                                            <div class="alert alert-success alert-dismissible fade show mt-3 mb-1" role="alert">
+                                            <div class="alert alert-secondary alert-dismissible fade show mt-3 mb-1" role="alert">
                                                 <div>
                                                     <strong>Event created!</strong>
                                                 </div>
