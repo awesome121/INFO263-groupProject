@@ -43,3 +43,18 @@ SELECT * FROM vw_front_event WHERE date >= curdate() ORDER BY date ASC;
 END$$
 
 DELIMITER ;
+
+
+DELIMITER $$
+CREATE PROCEDURE `show_week_events`(
+	IN start_date date, 
+	IN end_date date
+    )
+
+BEGIN
+SELECT * FROM vw_front_event
+WHERE date >= start_date AND date <= end_date;
+END$$
+
+DELIMITER ;
+

@@ -22,8 +22,7 @@
 }
 
 #search {
-    padding-left: 400px;
-    padding-top: -0px;
+    right: 340px;
     font-family: "serif";
     color: gray;
     position: absolute;

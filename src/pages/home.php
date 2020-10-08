@@ -31,7 +31,7 @@ if (!isset($_GET['startDate'])) {
     $_GET['startDate'] = '2020-05-11';
     $_GET['endDate'] = '2020-05-17';
 }
-$query = "call INFO263_cgo54_tserver.show_week_events('{$_GET['startDate']}', '{$_GET['endDate']}');";
+$query = "call INFO263_lcs57_tserver.show_week_events('{$_GET['startDate']}', '{$_GET['endDate']}');";
 $conn = new mysqli($hostname, $username, $password, $database); // New database connection
 $week_events = array();
 $events = mysqli_query($conn, $query);
@@ -83,7 +83,7 @@ while ($row != NULL) {
                     <a class="nav-link" href="login.php">Logout</a>
                 </li>
 
-                <!-- Search -->
+                <!-- Searchbar -->
                 <li class="nav-item" id="search">
                     <a class="dropdown">
                         <div id="myDropdown" class="dropdown-content">
