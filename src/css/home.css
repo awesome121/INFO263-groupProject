@@ -1,11 +1,13 @@
+/* not being used currently
 #myInput {
+
     alignment: bottom;
     box-sizing: border-box;
-    background-image: url('../images/searchicon.png');
+    /*background-image: url('../images/searchicon.png');
     background-position: 14px 12px;
     background-repeat: no-repeat;
     font-size: 16px;
-    padding: 12px 10px 8px 45px;
+    padding: 12px 10px 8px 5px;
     border: none;
     border-bottom: 1px solid #ddd;
     z-index: 2;
@@ -13,6 +15,7 @@
 }
 
 #myInput:focus {outline: 3px solid #ddd;}
+*/
 
 .dropdown {
     float: right;
@@ -27,6 +30,37 @@
     color: gray;
     position: absolute;
     z-index: 2;
+}
+
+/* Style for the search field */
+form.searchbar input[type=text] {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    float: left;
+    width: 80%;
+    background: white;
+}
+
+/* Style for the search button */
+form.searchbar button {
+    width: 20%;
+    padding: 10px;
+    background: #666666;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+form.searchbar button:hover {
+    background: black;
+}
+
+/* Clear floats */
+form.searchbar::after {
+    content: "";
+    clear: both;
+    display: table;
 }
 
 #logout {
@@ -70,7 +104,6 @@
     background-color: #f6f6f6;
     min-width: 230px;
     overflow: auto;
-    border: 1px solid #ddd;
     z-index: 1;
 }
 

@@ -31,7 +31,7 @@ if (!isset($_GET['startDate'])) {
     $_GET['startDate'] = '2020-05-11';
     $_GET['endDate'] = '2020-05-17';
 }
-$query = "call INFO263_lcs57_tserver.show_week_events('{$_GET['startDate']}', '{$_GET['endDate']}');";
+$query = "call $acct.show_week_events('{$_GET['startDate']}', '{$_GET['endDate']}');";
 $conn = new mysqli($hostname, $username, $password, $database); // New database connection
 $week_events = array();
 $events = mysqli_query($conn, $query);
@@ -48,7 +48,9 @@ while ($row != NULL) {
         <title>Home - TServer</title>
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+              integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="../css/home.css" />
     </head>
 
@@ -83,12 +85,13 @@ while ($row != NULL) {
                     <a class="nav-link" href="login.php">Logout</a>
                 </li>
 
-                <!-- Searchbar -->
-                <li class="nav-item" id="search">
+                <!-- Search w button -->
+                <form class="searchbar" class="nav-item" id="search">
                     <a class="dropdown">
                         <div id="myDropdown" class="dropdown-content">
-                            <input type="text" placeholder="Type an event name.." id="myInput" ,
+                            <input type="text" placeholder="Type an event name..",
                                    onkeyup="showSearchResult(this.value)">
+                            <button class="btn btn-dark" type="submit"><i class="fa fa-search"></i></button>
                             <div id="hint">
                                 <?php
                                 if (isset($keywords)) {
@@ -101,9 +104,10 @@ while ($row != NULL) {
                                     }
                                 }
                                 ?> </div>
+
                         </div>
                     </a>
-                </li>
+                </form>
             </ul>
         </nav>
 

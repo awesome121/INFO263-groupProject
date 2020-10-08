@@ -4,7 +4,9 @@
         <title>Future Events - TServer</title>
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+              integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="../css/stylesheet.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="../css/home.css" />
     </head>
@@ -54,7 +56,7 @@
                     <a class="nav-link" href="login.php">Logout</a>
                 </li>
 
-                <!-- Searchbar -->
+                <!-- Searchbar
                 <li class="nav-item" id="search">
                     <a class="dropdown">
                         <div id="myDropdown" class="dropdown-content">
@@ -74,7 +76,31 @@
                                 ?> </div>
                         </div>
                     </a>
-                </li>
+                </li>-->
+
+                <!-- Search w button -->
+                <form class="searchbar" class="nav-item" id="search">
+                    <a class="dropdown">
+                        <div id="myDropdown" class="dropdown-content">
+                        <input type="text" placeholder="Type an event name..",
+                               onkeyup="showSearchResult(this.value)">
+                        <button class="btn btn-dark" type="submit"><i class="fa fa-search"></i></button>
+                        <div id="hint">
+                            <?php
+                            if (isset($keywords)) {
+                                if ($keywords != "" and sizeof($hint) == 0) {
+                                    echo "<a>No Suggestion</a>";
+                                } else {
+                                    foreach ($hint as $key => $value)
+                                        echo " <a>{$value}</a> ";
+
+                                }
+                            }
+                            ?> </div>
+
+                        </div>
+                    </a>
+                </form>
 
             </ul>
 
