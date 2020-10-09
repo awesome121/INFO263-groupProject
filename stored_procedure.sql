@@ -55,7 +55,8 @@ CREATE PROCEDURE `show_week_events`(
 
 BEGIN
 SELECT * FROM vw_front_event
-WHERE date >= start_date AND date <= end_date;
+WHERE date >= start_date AND date <= end_date 
+ORDER BY date, cluster_id, group_id ASC;
 END$$
 
 DELIMITER ;

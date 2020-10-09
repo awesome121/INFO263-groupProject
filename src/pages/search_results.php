@@ -95,6 +95,7 @@
     }
     ?>
     <h1>Search Results</h1>
+
     <div class="table">
         <table class="table table-responsive">
 
