@@ -3,7 +3,9 @@ DROP table IF EXISTS `front_user`;
 DROP procedure IF EXISTS `get_user`;
 DROP procedure IF EXISTS `show_events_past`;
 DROP procedure IF EXISTS `show_events_future`;
-
+DROP procedure IF Exists `show_week_events`;
+DROP procedure IF Exists `show_search_results`;
+DROP procedure IF Exists `test_search_results`;
 
 
 CREATE TABLE `front_user` (
@@ -58,3 +60,23 @@ END$$
 
 DELIMITER ;
 
+DELIMITER $$
+CREATE PROCEDURE `show_search_results`(
+	IN search_value text
+    )
+
+BEGIN
+SELECT * FROM vw_front_event
+WHERE event_name LIKE ('%'+search_value+'%') ORDER BY date DESC;
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `test_search_results`()
+BEGIN
+SELECT * FROM vw_front_event
+WHERE event_name LIKE '%stat%' ORDER BY date DESC;
+END$$
+
+DELIMITER ;

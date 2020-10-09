@@ -84,7 +84,7 @@
                         <div id="myDropdown" class="dropdown-content">
                         <input type="text" placeholder="Type an event name..",
                                onkeyup="showSearchResult(this.value)">
-                        <button class="btn btn-dark" type="submit"><i class="fa fa-search"></i></button>
+                        <button class="btn btn-dark" type="submit" onclick="openWin()"><i class="fa fa-search"></i></button>
                         <div id="hint">
                             <?php
                             if (isset($keywords)) {

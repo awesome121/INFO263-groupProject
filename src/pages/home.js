@@ -20,6 +20,21 @@ function showSearchResult(keyword) {
     }
 }
 
+function openWin() {
+    //opens in new tab cannot figure out how to open it in the same one. Everytbing I tried did not work.
+    window.open("search_results.php");
+    return false;
+}
+
+function printSearchResults(){
+    window.location.href(search_results.php)
+    var x = document.getElementById("myInput");
+    document.getElementById("demo").innerHTML = "You are searching for: " + x.value;
+}
+function newPage(){
+    window.open("https://www.w3schools.com");
+}
+
 
 function calendarSwitch(left){
     var date = document.getElementById("currentDate").innerText.split(" - ");
@@ -77,6 +92,8 @@ for (var i=0; i < showButtons.length; i++){
 
 
 document.getElementById("myDropdown").classList.toggle("show");
-console.log("Ready");
+
+
+
 
 
