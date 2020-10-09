@@ -185,10 +185,10 @@ while ($row != NULL) {
                         </div>";
                             echo "<div class=\"collapse multi-collapse\" id=\"monday{$count}\">";
                             echo "<div class=\"card-body\">";
-                            echo "<p class=\"card-text\">Time: {$row[6]}</p>
-                                <p class=\"card-text\">Activate Status: {$row[7]}</p>
-                                <p class=\"card-text\">Cluster Name: {$row[1]}</p>
-                                <p class=\"card-text\">Machine Group: {$row[3]}</p>";
+                            echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
+                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
+                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
                             echo '</div></div></div>';
                             $count += 1;
                         }
@@ -214,10 +214,10 @@ while ($row != NULL) {
                         </div>";
                             echo "<div class=\"collapse multi-collapse\" id=\"tuesday{$count}\">";
                             echo "<div class=\"card-body\">";
-                            echo "<p class=\"card-text\">Time: {$row[6]}</p>
-                                <p class=\"card-text\">Activate Status: {$row[7]}</p>
-                                <p class=\"card-text\">Cluster Name: {$row[1]}</p>
-                                <p class=\"card-text\">Machine Group: {$row[3]}</p>";
+                            echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
+                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
+                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
                             echo '</div></div></div>';
                             $count += 1;
                         }
@@ -242,10 +242,10 @@ while ($row != NULL) {
                         </div>";
                             echo "<div class=\"collapse multi-collapse\" id=\"wednesday{$count}\">";
                             echo "<div class=\"card-body\">";
-                            echo "<p class=\"card-text\">Time: {$row[6]}</p>
-                                <p class=\"card-text\">Activate Status: {$row[7]}</p>
-                                <p class=\"card-text\">Cluster Name: {$row[1]}</p>
-                                <p class=\"card-text\">Machine Group: {$row[3]}</p>";
+                            echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
+                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
+                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
                             echo '</div></div></div>';
                             $count += 1;
                         }
@@ -269,10 +269,10 @@ while ($row != NULL) {
                         </div>";
                             echo "<div class=\"collapse multi-collapse\" id=\"thursday{$count}\">";
                             echo "<div class=\"card-body\">";
-                            echo "<p class=\"card-text\">Time: {$row[6]}</p>
-                                <p class=\"card-text\">Activate Status: {$row[7]}</p>
-                                <p class=\"card-text\">Cluster Name: {$row[1]}</p>
-                                <p class=\"card-text\">Machine Group: {$row[3]}</p>";
+                            echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
+                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
+                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
                             echo '</div></div></div>';
                             $count += 1;
                         }
@@ -294,10 +294,10 @@ while ($row != NULL) {
                         </div>";
                             echo "<div class=\"collapse multi-collapse\" id=\"friday{$count}\">";
                             echo "<div class=\"card-body\">";
-                            echo "<p class=\"card-text\">Time: {$row[6]}</p>
-                                <p class=\"card-text\">Activate Status: {$row[7]}</p>
-                                <p class=\"card-text\">Cluster Name: {$row[1]}</p>
-                                <p class=\"card-text\">Machine Group: {$row[3]}</p>";
+                            echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
+                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
+                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
                             echo '</div></div></div>';
                             $count += 1;
                         }
@@ -319,10 +319,10 @@ while ($row != NULL) {
                         </div>";
                             echo "<div class=\"collapse multi-collapse\" id=\"saturday{$count}\">";
                             echo "<div class=\"card-body\">";
-                            echo "<p class=\"card-text\">Time: {$row[6]}</p>
-                                <p class=\"card-text\">Activate Status: {$row[7]}</p>
-                                <p class=\"card-text\">Cluster Name: {$row[1]}</p>
-                                <p class=\"card-text\">Machine Group: {$row[3]}</p>";
+                            echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
+                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
+                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
                             echo '</div></div></div>';
                             $count += 1;
                         }
@@ -344,10 +344,10 @@ while ($row != NULL) {
                         </div>";
                             echo "<div class=\"collapse multi-collapse\" id=\"sunday{$count}\">";
                             echo "<div class=\"card-body\">";
-                            echo "<p class=\"card-text\">Time: {$row[6]}</p>
-                                <p class=\"card-text\">Activate Status: {$row[7]}</p>
-                                <p class=\"card-text\">Cluster Name: {$row[1]}</p>
-                                <p class=\"card-text\">Machine Group: {$row[3]}</p>";
+                            echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
+                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
+                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
                             echo '</div></div></div>';
                             $count += 1;
                         }
