@@ -1,4 +1,4 @@
-USE `INFO263_cgo54_tserver`; /********** Please change your database name *********/
+USE `INFO263_lcs57_tserver`; /********** Please change your database name *********/
 DROP table IF EXISTS `front_user`;
 DROP view IF EXISTS `vw_front_event_with_day_of_week`;
 DROP procedure IF EXISTS `get_user`;
