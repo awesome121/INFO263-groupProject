@@ -118,6 +118,6 @@ DELIMITER ;
 DELIMITER $$       
 CREATE PROCEDURE `get_cluster_name` ()
 BEGIN
-	select cluster_name from cluster;
+	select cluster_name from front_cluster;
 END$$
 DELIMITER ;
