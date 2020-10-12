@@ -1,4 +1,5 @@
 <?php
+//Note this cookie check echo is making the search button weird so take out when no longer need to manually check it
 if(!isset($_COOKIE['keywords'])){
     echo "COOKIE NOT SET";
 }
