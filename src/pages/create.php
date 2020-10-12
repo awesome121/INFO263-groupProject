@@ -162,3 +162,21 @@
         </script>
     </body>
 </html>
+
+
+<?php
+//if submit valid arguments
+$conn = new mysqli($hostname, $username, $password, $database); // New database connection
+/* Parameter for add_event procedure
+in_event_name VARCHAR(255),
+in_cluster_name VARCHAR(128),
+in_time_off_set_before_start TIME
+in_duration TIME
+in_event_year year(4)
+in_week_of_year int(11)
+*/
+$query = "call add_event('event_name', '{$_POST['subject']}');";
+$events = mysqli_query($conn, $query);
+
+//
+?>
