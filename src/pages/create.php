@@ -21,8 +21,8 @@ setcookie('keywords', $_GET['keywords']);
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@1.4.0/dist/select2-bootstrap4.min.css" integrity="sha256-3UPl0A8ykc7qW77XmHP0HDb1Nvs/09AACcTrNpIbdJ4=" crossorigin="anonymous">
         <!-- link to css -->
         <link rel="stylesheet" href="../css/home.css" />
-
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
     </head>
 
     <body class="h-100">
