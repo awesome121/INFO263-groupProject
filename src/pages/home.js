@@ -21,8 +21,10 @@ function showSearchResult(keyword) {
 }
 
 function openWin() {
-    //opens in new tab cannot figure out how to open it in the same one. Everytbing I tried did not work.
-    window.open("search_results.php");
+    //opens in new tab cannot figure out how to open it in the same one. Everything I tried did not work.
+    var test = document.getElementById("input").textContent;
+    console.log(test);
+    window.open( "search_results.php?searched=" + test);
     return false;
 }
 

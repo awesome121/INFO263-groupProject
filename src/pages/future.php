@@ -1,3 +1,11 @@
+<?php
+if(!isset($_COOKIE['keywords'])){
+    echo "COOKIE NOT SET";
+    }
+else{
+    echo"COOKIE SET";
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -82,7 +90,7 @@
                 <form class="searchbar" class="nav-item" id="search">
                     <a class="dropdown">
                         <div id="myDropdown" class="dropdown-content">
-                        <input type="text" placeholder="Type an event name..",
+                        <input id="input" type="text" placeholder="Type an event name..",
                                onkeyup="showSearchResult(this.value)">
                         <button class="btn btn-dark" type="submit" onclick="openWin()"><i class="fa fa-search"></i></button>
                         <div id="hint">

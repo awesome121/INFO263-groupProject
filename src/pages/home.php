@@ -25,7 +25,7 @@ if (sizeof($hint) == 7) {
     array_push($hint, ". . . . . . .");
 }
 
-
+setcookie('keywords', 'math');
 
 if (!isset($_GET['startDate'])) {
     $_GET['startDate'] = '2020-05-11';

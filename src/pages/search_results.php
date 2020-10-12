@@ -81,7 +81,11 @@
     }
 
     //shows events that have happened in the past ordered by date descending
-    $query = "call show_events_past()";
+
+    $search_value = $_GET['searched'];
+    echo $search_value;
+    echo 'leilani';
+    $query = "call show_search_results('$search_value')";
     $result = $conn->query($query);
     //Test the query was completed without error
     if($conn->error){
@@ -94,36 +98,48 @@
         $field_names[] = $field->name;
     }
     ?>
-    <h1>Search Results</h1>
+    <h1>Search Results for <? echo $search_value ?></h1>
+    <?
+    $num_rows = $result->num_rows;
+    //Checks to see if there is an event that includes searched info
+    if ($num_rows == 0) {
+    echo "<h2>There is no events name that includes $search_value.</h2>";
+    }
+    else{
+    ?>
 
-    <div class="table">
-        <table class="table table-responsive">
+        <div class="table">
+            <table class="table table-responsive">
 
-            <thead>
+                <thead>
+
+                <?
+                //output the headers
+
+                for($i = 0; $i < sizeof($field_names); ++$i){
+                    echo "<th class='sticky-header' scope ='col'><p>" . htmlspecialchars(ucwords(str_replace("_", " ", $field_names[$i]))). "</p></th>";
+                }
+                ?>
+
+                </thead>
+                <tbody>
+                <?
+                for($j = 0; $j < $num_rows; ++$j){
+                    $row = $result->fetch_array(MYSQLI_ASSOC);
+                    echo "<tr scope='row' class='active'>";
+                    for($k = 0; $k < sizeof($field_names); ++$k){
+                        echo "<td>" . htmlspecialchars($row[$field_names[$k]]) . "</td>";
+                    }
+                    echo "</tr>";}
+
+                ?>
+                </tbody>
+            </table>
 
             <?
-            //output the headers
-
-            for($i = 0; $i < sizeof($field_names); ++$i){
-                echo "<th class='sticky-header' scope ='col'><p>" . htmlspecialchars(ucwords(str_replace("_", " ", $field_names[$i]))). "</p></th>";
             }
             ?>
-
-            </thead>
-            <tbody>
-            <?
-            $num_rows = $result->num_rows;
-            for($j = 0; $j < $num_rows; ++$j){
-                $row = $result->fetch_array(MYSQLI_ASSOC);
-                echo "<tr scope='row' class='active'>";
-                for($k = 0; $k < sizeof($field_names); ++$k){
-                    echo "<td>" . htmlspecialchars($row[$field_names[$k]]) . "</td>";
-                }
-                echo "</tr>";}
-            ?>
-            </tbody>
-        </table>
-    </div>
+        </div>
     <!-- closing open connections-->
     <?
     $result->close();

@@ -64,12 +64,11 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE `show_search_results`(
-	IN search_value text
+	IN search_value VARCHAR(50)
     )
-
 BEGIN
 SELECT * FROM vw_front_event
-WHERE event_name LIKE ('%'+search_value+'%') ORDER BY date DESC;
+WHERE event_name LIKE concat('%', search_value, '%') ORDER BY date DESC;
 END$$
 
 DELIMITER ;
@@ -77,8 +76,9 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE `test_search_results`()
 BEGIN
+SET @var1 = 'stat';
 SELECT * FROM vw_front_event
-WHERE event_name LIKE '%stat%' ORDER BY date DESC;
+WHERE event_name LIKE concat('%', @var1, '%') ORDER BY date DESC;
 END$$
 
 DELIMITER ;
