@@ -1,6 +1,6 @@
 USE `INFO263_lcs57_tserver`; /********** Please change your database name *********/
 DROP view IF EXISTS `front_user`;
-DROP table IF EXISTS `vw_new`;
+DROP table IF EXISTS `vw_front_event_with_day_of_week`;
 DROP procedure IF EXISTS `get_user`;
 DROP procedure IF EXISTS `show_events_past`;
 DROP procedure IF EXISTS `show_events_future`;
@@ -26,7 +26,7 @@ INSERT INTO `front_user` (`username`, `password`, `email`, `fullName`) VALUES ('
 
 	       
 DELIMITER $$
-CREATE VIEW `vw_new` AS
+CREATE VIEW `vw_front_event_with_day_of_week` AS
 SELECT 
 `e`.`event_name` AS `event_name`,
 `fc`.`cluster_name` AS `cluster_name`,
@@ -104,7 +104,7 @@ CREATE PROCEDURE `show_week_events`(
     )
 
 BEGIN
-SELECT * FROM vw_front_event
+SELECT * FROM vw_front_event_with_day_of_week
 WHERE date >= start_date AND date <= end_date 
 ORDER BY date, cluster_id, group_id ASC;
 END$$
