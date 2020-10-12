@@ -50,36 +50,37 @@ setcookie('keywords', $_GET['keywords']);
                     <a class="nav-link" href="past.php">Past Events</a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item" id="logout">
                     <a class="nav-link" href="login.php">Logout</a>
                 </li>
-            </ul>
 
-            <!-- Search -->
-            <!-- Search w button -->
-            <form class="searchbar" class="nav-item" id="search" method="'post">
-                <a class="dropdown">
-                    <div id="myDropdown" class="dropdown-content">
-                        <input id="input" type="text" placeholder="Type an event name..",
-                               onkeyup="showSearchResult(this.value)">
 
-                        <button class="btn btn-dark" type="submit" onclick="openWin()"><i class="fa fa-search"></i></button>
-                        <div id="hint">
-                            <?php
-                            if (isset($keywords)) {
-                                if ($keywords != "" and sizeof($hint) == 0) {
-                                    echo "<a>No Suggestion</a>";
-                                } else {
-                                    foreach ($hint as $key => $value)
-                                        echo " <a>{$value}</a> ";
+                <!-- Search w button -->
+                <form class="searchbar" class="nav-item" id="search">
+                    <a class="dropdown">
+                        <div id="myDropdown" class="dropdown-content">
+                            <input id="input" type="text" placeholder="Type an event name..",
+                                   onkeyup="showSearchResult(this.value)">
 
+                            <button class="btn btn-dark" type="submit" onclick="openWin()"><i class="fa fa-search"></i></button>
+                            <div id="hint">
+                                <?php
+                                if (isset($keywords)) {
+                                    if ($keywords != "" and sizeof($hint) == 0) {
+                                        echo "<a>No Suggestion</a>";
+                                    } else {
+                                        foreach ($hint as $key => $value)
+                                            echo " <a>{$value}</a> ";
+
+                                    }
                                 }
-                            }
-                            ?> </div>
+                                ?> </div>
 
-                    </div>
-                </a>
-            </form>
+                        </div>
+                    </a>
+                </form>
+
+            </ul>
         </nav>
 
         <div class="container-fluid" style="height: calc(100% - 76px);">

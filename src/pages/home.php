@@ -86,7 +86,7 @@ while ($row != NULL) {
                 </li>
 
                 <!-- Search w button -->
-                <form class="searchbar" class="nav-item" id="search" method="post">
+                <form class="searchbar" class="nav-item" id="search">
                     <a class="dropdown">
                         <div id="myDropdown" class="dropdown-content">
                              <input id="input" type="text" placeholder="Type an event name..",
