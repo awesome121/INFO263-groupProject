@@ -1,4 +1,4 @@
-USE `INFO263_lcs57_tserver`; /********** Please change your database name *********/
+USE `INFO263_cgo54_tserver`; /********** Please change your database name *********/
 DROP table IF EXISTS `front_user`;
 DROP view IF EXISTS `vw_front_event_with_day_of_week`;
 DROP procedure IF EXISTS `get_user`;
@@ -25,7 +25,6 @@ INSERT INTO `front_user` (`username`, `password`, `email`, `fullName`) VALUES ('
 
 
 	       
-DELIMITER $$
 CREATE VIEW `vw_front_event_with_day_of_week` AS
 SELECT 
 `e`.`event_name` AS `event_name`,
@@ -60,8 +59,8 @@ ADDTIME(`d`.`start_time`, `a`.`time_offset`) AS `time`,
             AND (`a`.`action_id` = `el`.`action_id`)
             AND (`d`.`daily_id` = `el`.`daily_id`)
             AND (`fw`.`weekly_id` = `el`.`weekly_id`))))
-    ORDER BY `fw`.`week_of_year` , `d`.`day_of_week` , ADDTIME(`d`.`start_time`, `a`.`time_offset`) , `g`.`machine_group`
-DELIMITER ;       
+    ORDER BY `fw`.`week_of_year` , `d`.`day_of_week` , ADDTIME(`d`.`start_time`, `a`.`time_offset`) , `g`.`machine_group`;
+    vw_front_group_client
 	       
 	       
 	       
@@ -180,3 +179,4 @@ BEGIN
 END$$
 
 DELIMITER ;
+ 
