@@ -52,6 +52,7 @@ while ($row != NULL) {
               integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="../css/home.css" />
+        <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
     </head>
 
     <body>
