@@ -48,14 +48,14 @@ ADDTIME(`d`.`start_time`, `a`.`time_offset`) AS `time`,
 `el`.`ran` AS `date_ran`,
 `d`.`day_of_week` AS `day_of_week`
     FROM
-        (((((((`INFO263_cgo54_tserver`.`front_event` `e`
-        JOIN `INFO263_cgo54_tserver`.`front_daily` `d` ON ((`e`.`event_id` = `d`.`event_id`)))
-        JOIN `INFO263_cgo54_tserver`.`front_group` `g` ON ((`d`.`group_id` = `g`.`group_id`)))
-        JOIN `INFO263_cgo54_tserver`.`front_day_of_week` `w` ON ((`d`.`day_of_week` = `w`.`day_of_week`)))
-        JOIN `INFO263_cgo54_tserver`.`front_action` `a` ON ((`e`.`event_id` = `a`.`event_id`)))
-        JOIN `INFO263_cgo54_tserver`.`front_cluster` `fc` ON ((`a`.`cluster_id` = `fc`.`cluster_id`)))
-        JOIN `INFO263_cgo54_tserver`.`front_weekly` `fw` ON ((`e`.`event_id` = `fw`.`event_id`)))
-        LEFT JOIN `INFO263_cgo54_tserver`.`front_event_log` `el` ON (((`e`.`event_id` = `el`.`event_id`)
+        (((((((`front_event` `e`
+        JOIN `front_daily` `d` ON ((`e`.`event_id` = `d`.`event_id`)))
+        JOIN `front_group` `g` ON ((`d`.`group_id` = `g`.`group_id`)))
+        JOIN `front_day_of_week` `w` ON ((`d`.`day_of_week` = `w`.`day_of_week`)))
+        JOIN `front_action` `a` ON ((`e`.`event_id` = `a`.`event_id`)))
+        JOIN `front_cluster` `fc` ON ((`a`.`cluster_id` = `fc`.`cluster_id`)))
+        JOIN `front_weekly` `fw` ON ((`e`.`event_id` = `fw`.`event_id`)))
+        LEFT JOIN `front_event_log` `el` ON (((`e`.`event_id` = `el`.`event_id`)
             AND (`a`.`action_id` = `el`.`action_id`)
             AND (`d`.`daily_id` = `el`.`daily_id`)
             AND (`fw`.`weekly_id` = `el`.`weekly_id`))))
