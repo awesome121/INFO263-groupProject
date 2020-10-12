@@ -121,3 +121,13 @@ BEGIN
 	select cluster_name from front_cluster;
 END$$
 DELIMITER ;
+	       
+	       
+	       
+DELIMITER $$ 	       
+CREATE PROCEDURE `get_machine_group` ()
+BEGIN
+	select machine_group from front_group;
+END$$
+
+DELIMITER ;
