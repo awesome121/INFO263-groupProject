@@ -5,6 +5,7 @@ if(!isset($_COOKIE['keywords'])){
 else{
     echo"COOKIE SET";
 }
+setcookie('keywords', $_GET['keywords']);
 ?>
 <!DOCTYPE html>
 <html>
@@ -87,11 +88,12 @@ else{
                 </li>-->
 
                 <!-- Search w button -->
-                <form class="searchbar" class="nav-item" id="search">
+                <form class="searchbar" class="nav-item" id="search" method="'post">
                     <a class="dropdown">
                         <div id="myDropdown" class="dropdown-content">
                         <input id="input" type="text" placeholder="Type an event name..",
                                onkeyup="showSearchResult(this.value)">
+
                         <button class="btn btn-dark" type="submit" onclick="openWin()"><i class="fa fa-search"></i></button>
                         <div id="hint">
                             <?php

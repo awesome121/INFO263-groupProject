@@ -24,8 +24,8 @@
 if (sizeof($hint) == 7) {
     array_push($hint, ". . . . . . .");
 }
-
-setcookie('keywords', 'math');
+$searched = 'stat';
+setcookie('keywords', $_GET['keywords']);
 
 if (!isset($_GET['startDate'])) {
     $_GET['startDate'] = '2020-05-11';
@@ -86,12 +86,14 @@ while ($row != NULL) {
                 </li>
 
                 <!-- Search w button -->
-                <form class="searchbar" class="nav-item" id="search">
+                <form class="searchbar" class="nav-item" id="search" method="post">
                     <a class="dropdown">
                         <div id="myDropdown" class="dropdown-content">
-                            <input type="text" placeholder="Type an event name..",
+                             <input id="input" type="text" placeholder="Type an event name..",
                                    onkeyup="showSearchResult(this.value)">
+
                             <button class="btn btn-dark" type="submit" onclick="openWin()"><i class="fa fa-search"></i></button>
+
                             <div id="hint">
                                 <?php
                                 if (isset($keywords)) {

@@ -1,3 +1,12 @@
+<?php
+if(!isset($_COOKIE['keywords'])){
+    echo "COOKIE NOT SET";
+}
+else{
+    echo"COOKIE SET";
+}
+setcookie('keywords', $_GET['keywords']);
+?>
 <!DOCTYPE html>
 <html>
     <head>

@@ -1,3 +1,12 @@
+<?php
+if(!isset($_COOKIE['keywords'])){
+    echo "COOKIE NOT SET";
+}
+else{
+    echo"COOKIE SET";
+}
+setcookie('keywords', $_GET['keywords']);
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,9 +91,9 @@
 
     //shows events that have happened in the past ordered by date descending
 
-    $search_value = $_GET['searched'];
+    $search_value = $_COOKIE['keywords'];
     echo $search_value;
-    echo 'leilani';
+
     $query = "call show_search_results('$search_value')";
     $result = $conn->query($query);
     //Test the query was completed without error

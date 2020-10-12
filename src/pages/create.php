@@ -1,3 +1,12 @@
+<?php
+if(!isset($_COOKIE['keywords'])){
+    echo "COOKIE NOT SET";
+}
+else{
+    echo"COOKIE SET";
+}
+setcookie('keywords', $_GET['keywords']);
+?>
 <!DOCTYPE html>
 <html class="h-100">
     <head>
@@ -9,6 +18,10 @@
         <!-- Select2 CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" integrity="sha256-FdatTf20PQr/rWg+cAKfl6j4/IY3oohFAJ7gVC3M34E=" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@1.4.0/dist/select2-bootstrap4.min.css" integrity="sha256-3UPl0A8ykc7qW77XmHP0HDb1Nvs/09AACcTrNpIbdJ4=" crossorigin="anonymous">
+        <!-- link to css -->
+        <link rel="stylesheet" href="../css/home.css" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
     <body class="h-100">
@@ -43,9 +56,29 @@
             </ul>
 
             <!-- Search -->
-            <form class="form-inline">
-                <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-dark" type="submit">Search</button>
+            <!-- Search w button -->
+            <form class="searchbar" class="nav-item" id="search" method="'post">
+                <a class="dropdown">
+                    <div id="myDropdown" class="dropdown-content">
+                        <input id="input" type="text" placeholder="Type an event name..",
+                               onkeyup="showSearchResult(this.value)">
+
+                        <button class="btn btn-dark" type="submit" onclick="openWin()"><i class="fa fa-search"></i></button>
+                        <div id="hint">
+                            <?php
+                            if (isset($keywords)) {
+                                if ($keywords != "" and sizeof($hint) == 0) {
+                                    echo "<a>No Suggestion</a>";
+                                } else {
+                                    foreach ($hint as $key => $value)
+                                        echo " <a>{$value}</a> ";
+
+                                }
+                            }
+                            ?> </div>
+
+                    </div>
+                </a>
             </form>
         </nav>
 
@@ -160,6 +193,8 @@
                 theme: 'bootstrap4',
             });
         </script>
+        <!-- link to js-->
+        <script src="home.js"></script>
     </body>
 </html>
 
