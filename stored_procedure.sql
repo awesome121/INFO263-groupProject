@@ -3,9 +3,10 @@ DROP table IF EXISTS `front_user`;
 DROP procedure IF EXISTS `get_user`;
 DROP procedure IF EXISTS `show_events_past`;
 DROP procedure IF EXISTS `show_events_future`;
-DROP procedure IF Exists `show_week_events`;
-DROP procedure IF Exists `show_search_results`;
-DROP procedure IF Exists `test_search_results`;
+DROP procedure IF EXISTS `show_week_events`;
+DROP procedure IF EXISTS `show_search_results`;
+DROP procedure IF EXISTS `test_search_results`;
+DROP procedure IF EXISTS `add_event`;
 
 
 CREATE TABLE `front_user` (
@@ -80,4 +81,35 @@ SELECT * FROM vw_front_event
 WHERE event_name LIKE '%stat%' ORDER BY date DESC;
 END$$
 
+DELIMITER ;
+	      
+	      
+	       
+	       
+	       
+DELIMITER $$	       
+CREATE PROCEDURE `add_event`(
+IN in_event_name VARCHAR(255),
+IN in_cluster_name VARCHAR(128),
+IN in_time_off_set_before_start TIME,
+IN in_duration TIME, 
+IN in_event_year year(4),
+IN in_week_of_year int(11) unsigned
+)
+BEGIN
+	/* insert evnet and get the assigned event id */
+	insert into front_event(event_name, status) values (in_event_name, 1);
+    set @event_id  = (select event_id from front_event where event_name = in_event_name);
+    
+    /* get the corresponding cluster id */
+    set @cluster_id = (select cluster_id from front_cluster where cluster_name = in_cluster_name);
+    
+    /* insert actions and week */
+    insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_time_off_set_before_start, 3, 0);
+    insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_time_off_set_before_start, cluster_id, 1);
+    insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_duration, 3, 1);
+    insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_duration, cluster_id, 0);
+    insert into front_weekly(event_id, week_of_year, event_year) values (event_id, in_week_of_year, in_event_year);
+    
+END$$
 DELIMITER ;
