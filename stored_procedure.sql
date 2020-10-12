@@ -1,5 +1,6 @@
 USE `INFO263_lcs57_tserver`; /********** Please change your database name *********/
-DROP table IF EXISTS `front_user`;
+DROP view IF EXISTS `front_user`;
+DROP table IF EXISTS `vw_new`;
 DROP procedure IF EXISTS `get_user`;
 DROP procedure IF EXISTS `show_events_past`;
 DROP procedure IF EXISTS `show_events_future`;
@@ -7,6 +8,8 @@ DROP procedure IF EXISTS `show_week_events`;
 DROP procedure IF EXISTS `show_search_results`;
 DROP procedure IF EXISTS `test_search_results`;
 DROP procedure IF EXISTS `add_event`;
+DROP procedure IF EXISTS `get_cluster_name`;
+DROP procedure IF EXISTS `get_machine_group`;
 
 
 CREATE TABLE `front_user` (
@@ -21,6 +24,52 @@ INSERT INTO `front_user` (`username`, `password`, `email`, `fullName`) VALUES ('
 INSERT INTO `front_user` (`username`, `password`, `email`, `fullName`) VALUES ('lcs57', '123546', 'lcs57@uclive.ac.nz', 'Leilani Smith');
 
 
+	       
+DELIMITER $$
+CREATE VIEW `vw_new` AS
+SELECT 
+`e`.`event_name` AS `event_name`,
+`fc`.`cluster_name` AS `cluster_name`,
+`fc`.`cluster_id` AS `cluster_id`,
+`g`.`machine_group` AS `machine_group`,
+`g`.`group_id` AS `group_id`,
+STR_TO_DATE(CONCAT(`fw`.`event_year`,
+                        ' ',
+                        `fw`.`week_of_year`,
+                        ' ',
+                        `w`.`day`),
+                '%x %v %W') AS `date`,
+ADDTIME(`d`.`start_time`, `a`.`time_offset`) AS `time`,
+`a`.`activate` AS `activate`,
+`e`.`event_id` AS `event_id`,
+`a`.`action_id` AS `action_id`,
+`d`.`daily_id` AS `daily_id`,
+`fw`.`weekly_id` AS `weekly_id`,
+`el`.`status` AS `status`,
+`el`.`ran` AS `date_ran`,
+`d`.`day_of_week` AS `day_of_week`
+    FROM
+        (((((((`INFO263_cgo54_tserver`.`front_event` `e`
+        JOIN `INFO263_cgo54_tserver`.`front_daily` `d` ON ((`e`.`event_id` = `d`.`event_id`)))
+        JOIN `INFO263_cgo54_tserver`.`front_group` `g` ON ((`d`.`group_id` = `g`.`group_id`)))
+        JOIN `INFO263_cgo54_tserver`.`front_day_of_week` `w` ON ((`d`.`day_of_week` = `w`.`day_of_week`)))
+        JOIN `INFO263_cgo54_tserver`.`front_action` `a` ON ((`e`.`event_id` = `a`.`event_id`)))
+        JOIN `INFO263_cgo54_tserver`.`front_cluster` `fc` ON ((`a`.`cluster_id` = `fc`.`cluster_id`)))
+        JOIN `INFO263_cgo54_tserver`.`front_weekly` `fw` ON ((`e`.`event_id` = `fw`.`event_id`)))
+        LEFT JOIN `INFO263_cgo54_tserver`.`front_event_log` `el` ON (((`e`.`event_id` = `el`.`event_id`)
+            AND (`a`.`action_id` = `el`.`action_id`)
+            AND (`d`.`daily_id` = `el`.`daily_id`)
+            AND (`fw`.`weekly_id` = `el`.`weekly_id`))))
+    ORDER BY `fw`.`week_of_year` , `d`.`day_of_week` , ADDTIME(`d`.`start_time`, `a`.`time_offset`) , `g`.`machine_group`
+DELIMITER ;       
+	       
+	       
+	       
+	       
+	       
+	       
+	       
+	       
 DELIMITER $$
 CREATE PROCEDURE `get_user` ()
 BEGIN
@@ -112,4 +161,22 @@ BEGIN
     insert into front_weekly(event_id, week_of_year, event_year) values (event_id, in_week_of_year, in_event_year);
     
 END$$
+DELIMITER ;
+	       
+	
+DELIMITER $$       
+CREATE PROCEDURE `get_cluster_name` ()
+BEGIN
+	select cluster_name from front_cluster;
+END$$
+DELIMITER ;
+	       
+	       
+	       
+DELIMITER $$ 	       
+CREATE PROCEDURE `get_machine_group` ()
+BEGIN
+	select machine_group from front_group;
+END$$
+
 DELIMITER ;
