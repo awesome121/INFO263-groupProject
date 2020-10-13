@@ -1,12 +1,42 @@
 <?php
-/*(!isset($_COOKIE['keywords'])){
-    echo "COOKIE NOT SET";
-}
-else{
-    echo"COOKIE SET";
-}*/
-setcookie('keywords', $_GET['keywords']);
+    setcookie('keywords', $_GET['keywords']);
+
+    // Require the database credentials.
+    require_once('../db_config.php');
+
+    // Open a database connection.
+    $conn = new mysqli($hostname, $username, $password, $database);
+
+    // Get all the data that has been posted from the event creation form.
+    $event_name = $_POST["event_name"];
+    $cluster = $_POST["cluster"];
+    $date = $_POST["date"];
+    $start_time = $_POST["start_time"];
+    $end_time = $_POST["end_time"];
+    $machine_groups = $_POST["machine_groups"];
+    $notes = $_POST["notes"];
+
+    // Only create an event if all the required fields have been filled in.
+    if ($event_name && $cluster && $date && $start_time && $end_time && $machine_groups) {
+        // TODO: Save event in database, maybe check that start time is before end time and date is in the future?
+
+        /* Parameter for add_event procedure
+        in_event_name VARCHAR(255),
+        in_cluster_name VARCHAR(128),
+        in_time_off_set_before_start TIME
+        in_duration TIME
+        in_event_year year(4)
+        in_week_of_year int(11)
+        */
+
+        // $query = "call add_event('event_name', '{$_POST['subject']}');";
+        // $events = mysqli_query($conn, $query);
+
+        // Set the event created variable to true so that we can show the event created successfully message on the page below.
+        $event_created = true;
+    };
 ?>
+
 <!DOCTYPE html>
 <html class="h-100">
     <head>
@@ -86,19 +116,54 @@ setcookie('keywords', $_GET['keywords']);
         <div class="container-fluid" style="height: calc(100% - 76px);">
             <div class="row h-100">
                 <div class="col col-sm-12 col-md-8 col-lg-5 col-xl-4 m-auto">
+                    <?php
+                        // Print out a success message if the event has been created.
+                        if ($event_created) {
+                            print_r('
+                                <div class="alert alert-secondary alert-dismissible fade show my-2" role="alert">
+                                    <div>
+                                        <strong>Event created!</strong>
+                                    </div>
+                                    
+                                    <div class="mt-2">
+                                        Create another event, or <a href="future.php" class="alert-link">see all future events.</a>
+                                    </div>
+                                    
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            ');
+                        };
+                    ?>
+
                     <div class="card my-2">
                         <div class="card-body">
                             <form action="#" method="POST">
                                 <div class="form-group">
-                                    <label for="subject">Subject <span class="text-danger">*</span></label>
+                                    <label for="event_name">Event Name <span class="text-danger">*</span></label>
 
-                                    <select class="form-control" name="subject" id="subject" required>
+                                    <input class="form-control" type="text" name="event_name" id="event_name" required autofocus />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="cluster">Cluster <span class="text-danger">*</span></label>
+
+                                    <select class="form-control" name="cluster" id="cluster" required>
                                         <option selected disabled></option>
-                                        <option value="EMTH118">EMTH118</option>
-                                        <option value="EMTH119">EMTH119</option>
-                                        <option value="MATH101">MATH101</option>
-                                        <option value="MATH102">MATH102</option>
-                                        <option value="STAT101">STAT101</option>
+
+                                        <?php
+                                            $query = "call get_cluster_name();";
+
+                                            $result = mysqli_query($conn, $query);
+                                        
+                                            // Print out each cluster from the database as a select option.
+                                            while ($row = mysqli_fetch_row($result)) {
+                                                $cluster = $row[0];
+
+                                                print_r("<option value='$cluster'>$cluster</option>");
+                                            };
+                                        ?>
                                     </select>
                                 </div>
 
@@ -125,18 +190,21 @@ setcookie('keywords', $_GET['keywords']);
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="locations">Locations <span class="text-danger">*</span></label>
+                                    <label for="machine_groups">Machine Groups <span class="text-danger">*</span></label>
 
-                                    <select class="form-control" name="locations[]" id="locations" multiple required>
-                                        <option value="Erskine-001">Erskine 001</option>
-                                        <option value="Erskine-010">Erskine 010</option>
-                                        <option value="Erskine-033">Erskine 033</option>
-                                        <option value="Erskine-035">Erskine 035</option>
-                                        <option value="Erskine-038">Erskine 038</option>
-                                        <option value="Erskine-131">Erskine 131</option>
-                                        <option value="Erskine-133">Erskine 133</option>
-                                        <option value="Erskine-134">Erskine 134</option>
-                                        <option value="Erskine-136">Erskine 146</option>
+                                    <select class="form-control" name="machine_groups[]" id="machine_groups" multiple required>
+                                        <?php
+                                            $query = "call get_machine_group();";
+
+                                            $result = mysqli_query($conn, $query);
+                                        
+                                            // Print out each machine group from the database as a select option.
+                                            while ($row = mysqli_fetch_row($result)) {
+                                                $machine_group = $row[0];
+
+                                                print_r("<option value='$machine_group'>$machine_group</option>");
+                                            };
+                                        ?>
                                     </select>
                                 </div>
 
@@ -149,26 +217,6 @@ setcookie('keywords', $_GET['keywords']);
                                 <div class="text-center">
                                     <button class="btn btn-danger" type="submit">Create</button>
                                 </div>
-
-                                <?php 
-                                    if (isset($_POST['subject'])) {
-                                        print_r('
-                                            <div class="alert alert-secondary alert-dismissible fade show mt-3 mb-1" role="alert">
-                                                <div>
-                                                    <strong>Event created!</strong>
-                                                </div>
-                                                
-                                                <div class="mt-2">
-                                                    Create another event, or <a href="future.php" class="alert-link">see all future events.</a>
-                                                </div>
-                                                
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                        ');
-                                    };
-                                ?>
                             </form>
                         </div>
                     </div>
@@ -186,33 +234,20 @@ setcookie('keywords', $_GET['keywords']);
 
         <!-- Initialise select2 select boxes. -->
         <script>
-            $('#subject').select2({
+            $('#cluster').select2({
                 theme: 'bootstrap4',
             });
 
-            $('#locations').select2({
+            $('#event').select2({
+                theme: 'bootstrap4',
+            });
+
+            $('#machine_groups').select2({
                 theme: 'bootstrap4',
             });
         </script>
-        <!-- link to js-->
+
+        <!-- Home JS-->
         <script src="home.js"></script>
     </body>
 </html>
-
-
-<?php
-//if submit valid arguments
-$conn = new mysqli($hostname, $username, $password, $database); // New database connection
-/* Parameter for add_event procedure
-in_event_name VARCHAR(255),
-in_cluster_name VARCHAR(128),
-in_time_off_set_before_start TIME
-in_duration TIME
-in_event_year year(4)
-in_week_of_year int(11)
-*/
-$query = "call add_event('event_name', '{$_POST['subject']}');";
-$events = mysqli_query($conn, $query);
-
-//
-?>
