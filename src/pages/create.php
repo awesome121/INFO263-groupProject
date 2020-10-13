@@ -238,10 +238,6 @@
                 theme: 'bootstrap4',
             });
 
-            $('#event').select2({
-                theme: 'bootstrap4',
-            });
-
             $('#machine_groups').select2({
                 theme: 'bootstrap4',
             });
