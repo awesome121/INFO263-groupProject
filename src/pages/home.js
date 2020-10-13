@@ -22,20 +22,16 @@ function showSearchResult(keyword) {
 
 function openWin() {
     //opens in new tab cannot figure out how to open it in the same one. Everything I tried did not work.
-    var test = document.getElementById("input").textContent;
-    console.log(test);
-    window.open( "search_results.php?searched=" + test);
+    document.getElementById("input").textContent;
+    window.open( "search_results.php?searched=");
     return false;
 }
 
-function printSearchResults(){
+/*function printSearchResults(){
     window.location.href(search_results.php)
     var x = document.getElementById("myInput");
     document.getElementById("demo").innerHTML = "You are searching for: " + x.value;
-}
-function newPage(){
-    window.open("https://www.w3schools.com");
-}
+}*/
 
 
 function calendarSwitch(left){
@@ -74,10 +70,6 @@ function calendarSwitch(left){
     xmlhttp.open("GET", "home.php?startDate=" + startDate + "&endDate=" + endDate, true);
     xmlhttp.send();
 }
-
-
-
-
 
 var showButtons = document.getElementsByClassName("btn-primary");
 for (var i=0; i < showButtons.length; i++){

@@ -6,7 +6,6 @@ DROP procedure IF EXISTS `show_events_past`;
 DROP procedure IF EXISTS `show_events_future`;
 DROP procedure IF EXISTS `show_week_events`;
 DROP procedure IF EXISTS `show_search_results`;
-DROP procedure IF EXISTS `test_search_results`;
 DROP procedure IF EXISTS `add_event`;
 DROP procedure IF EXISTS `get_cluster_name`;
 DROP procedure IF EXISTS `get_machine_group`;
@@ -120,20 +119,6 @@ WHERE event_name LIKE concat('%', search_value, '%') ORDER BY date DESC;
 END$$
 
 DELIMITER ;
-
-DELIMITER $$
-CREATE PROCEDURE `test_search_results`()
-BEGIN
-SET @var1 = 'stat';
-SELECT * FROM vw_front_event
-WHERE event_name LIKE concat('%', @var1, '%') ORDER BY date DESC;
-END$$
-
-DELIMITER ;
-	      
-	      
-	       
-	       
 	       
 DELIMITER $$	       
 CREATE PROCEDURE `add_event`(

@@ -22,21 +22,6 @@ setcookie('keywords', $_GET['keywords']);
 
     </head>
 
-    <!--probably should put in styles CSS doc
-    <style>
-        th.sticky-header {
-            position: sticky;
-            top: 0;
-            z-index:10;
-            background-color:white;
-        }
-        table{
-            height: 640px;
-        }
-        h2{
-            padding: 10px;
-        }
-    </style>-->
     <body>
         <!-- Header -->
         <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #999999;">

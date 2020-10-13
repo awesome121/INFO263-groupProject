@@ -17,13 +17,6 @@
 #myInput:focus {outline: 3px solid #ddd;}
 */
 
-.dropdown {
-    float: right;
-    position: relative;
-    display: inline-block;
-    z-index: 2;
-}
-
 #search {
     right: 340px;
     font-family: "serif";
@@ -97,13 +90,19 @@ form.searchbar::after {
     padding-bottom: 10px;
     background-color: darkgray;
 }
+.dropdown {
+    float: right;
+    position: relative;
+    display: inline-block;
+    z-index: 2;
+}
 
 .dropdown-content {
     display: none;
     position: absolute;
     background-color: #f6f6f6;
     min-width: 230px;
-    overflow: auto;
+    overflow: none;
     z-index: 1;
 }
 
@@ -114,6 +113,7 @@ form.searchbar::after {
     display: block;
 }
 
+.dropdown-content a:hover {background-color: #f1f1f1}
 
 .btn-primary{
     background: #999999;
@@ -122,7 +122,5 @@ form.searchbar::after {
     /*padding-left: 85px;*/
     /*padding-right: 85px;*/
 }
-
-.dropdown a:hover {background-color: #ddd;}
 
 .show {display: block;}
