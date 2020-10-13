@@ -79,37 +79,35 @@
                 <li class="nav-item">
                     <a class="nav-link" href="past.php">Past Events</a>
                 </li>
+            </ul>
 
-                <li class="nav-item" id="logout">
+            <div class="form-inline my-2 my-lg-0">
+                <div class="dropdown">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search events" onkeyup="showSearchResult(this.value);" data-toggle="dropdown" aria-label="Search">
+                    
+                    <button class="btn btn-secondary my-2 my-sm-0" type="button" onclick="window.location.href='search_results.php'"><i class="fa fa-search"></i></button>
+                    
+                    <div id="hint" class="dropdown-menu">
+                        <?php
+                            if (isset($keywords)) {
+                                if ($keywords != "" and sizeof($hint) == 0) {
+                                    echo "<a class='dropdown-item'>No results</a>";
+
+                                } else {
+                                    foreach ($hint as $key => $value) {
+                                        echo "<a class='dropdown-item' href='search_results.php?q=$keywords'>$value</a> ";
+                                    };
+                                };
+                            };
+                        ?>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="navbar-nav ml-3">
+                <li class="nav-item">
                     <a class="nav-link" href="login.php">Logout</a>
                 </li>
-
-
-                <!-- Search w button -->
-                <form class="searchbar" class="nav-item" id="search">
-                    <a class="dropdown">
-                        <div id="myDropdown" class="dropdown-content">
-                            <input id="input" type="text" placeholder="Type an event name..",
-                                   onkeyup="showSearchResult(this.value)">
-
-                            <button class="btn btn-dark" type="submit" onclick="openWin()"><i class="fa fa-search"></i></button>
-                            <div id="hint">
-                                <?php
-                                if (isset($keywords)) {
-                                    if ($keywords != "" and sizeof($hint) == 0) {
-                                        echo "<a>No Suggestion</a>";
-                                    } else {
-                                        foreach ($hint as $key => $value)
-                                            echo " <a>{$value}</a> ";
-
-                                    }
-                                }
-                                ?> </div>
-
-                        </div>
-                    </a>
-                </form>
-
             </ul>
         </nav>
 
