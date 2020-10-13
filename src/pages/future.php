@@ -22,21 +22,6 @@ setcookie('keywords', $_GET['keywords']);
 
     </head>
 
-    <!--probably should put in styles CSS doc
-    <style>
-        th.sticky-header {
-            position: sticky;
-            top: 0;
-            z-index:10;
-            background-color:white;
-        }
-        table{
-            height: 640px;
-        }
-        h2{
-            padding: 10px;
-        }
-    </style>-->
     <body>
         <!-- Header -->
         <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #999999;">
@@ -67,12 +52,15 @@ setcookie('keywords', $_GET['keywords']);
                     <a class="nav-link" href="login.php">Logout</a>
                 </li>
 
-                <!-- Searchbar
-                <li class="nav-item" id="search">
+                <!-- Search w button -->
+                <form class="searchbar" class="nav-item" id="search">
                     <a class="dropdown">
                         <div id="myDropdown" class="dropdown-content">
-                            <input type="text" placeholder="Type an event name.." id="myInput" ,
+                            <input id="input" type="text" placeholder="Type an event name..",
                                    onkeyup="showSearchResult(this.value)">
+
+                            <button class="btn btn-dark" type="submit" onclick="openWin()"><i class="fa fa-search"></i></button>
+
                             <div id="hint">
                                 <?php
                                 if (isset($keywords)) {
@@ -85,30 +73,6 @@ setcookie('keywords', $_GET['keywords']);
                                     }
                                 }
                                 ?> </div>
-                        </div>
-                    </a>
-                </li>-->
-
-                <!-- Search w button -->
-                <form class="searchbar" class="nav-item" id="search">
-                    <a class="dropdown">
-                        <div id="myDropdown" class="dropdown-content">
-                        <input id="input" type="text" placeholder="Type an event name..",
-                               onkeyup="showSearchResult(this.value)">
-
-                        <button class="btn btn-dark" type="submit" onclick="openWin()"><i class="fa fa-search"></i></button>
-                        <div id="hint">
-                            <?php
-                            if (isset($keywords)) {
-                                if ($keywords != "" and sizeof($hint) == 0) {
-                                    echo "<a>No Suggestion</a>";
-                                } else {
-                                    foreach ($hint as $key => $value)
-                                        echo " <a>{$value}</a> ";
-
-                                }
-                            }
-                            ?> </div>
 
                         </div>
                     </a>

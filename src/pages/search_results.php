@@ -108,16 +108,16 @@ setcookie('keywords', $_GET['keywords']);
         $field_names[] = $field->name;
     }
     ?>
-    <h1>Search Results for <? echo $search_value ?></h1>
+
     <?
     $num_rows = $result->num_rows;
     //Checks to see if there is an event that includes searched info
     if ($num_rows == 0) {
-    echo "<h2>There is no events name that includes $search_value.</h2>";
+    echo "<h1>No event name includes <i>'$search_value'</i>.</h1>";
     }
     else{
     ?>
-
+    <h1>Search Results for<i> "<? echo $search_value ?>"</i></h1>
         <div class="table">
             <table class="table table-responsive">
 

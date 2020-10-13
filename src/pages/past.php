@@ -22,18 +22,6 @@ setcookie('keywords', $_GET['keywords']);
 
     </head>
 
-    <!--probably should put in styles CSS doc-->
-    <!--<style>
-        th.sticky-header {
-            position: sticky;
-            top: 0;
-            z-index:10;
-            background-color:white;
-        }
-        table{
-            height: 640px;
-        }
-    </style>-->
     <body>
         <!-- Header -->
 
@@ -64,7 +52,6 @@ setcookie('keywords', $_GET['keywords']);
                 <li class="nav-item" id="logout">
                     <a class="nav-link" href="login.php">Logout</a>
                 </li>
-
 
                 <!-- Search w button -->
                 <form class="searchbar" class="nav-item" id="search">
