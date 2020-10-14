@@ -31,7 +31,7 @@ if (!isset($_GET['startDate'])) {
     $_GET['startDate'] = '2020-05-11';
     $_GET['endDate'] = '2020-05-17';
 }
-$query = "call $acct.show_week_events('{$_GET['startDate']}', '{$_GET['endDate']}');";
+$query = "call show_week_events('{$_GET['startDate']}', '{$_GET['endDate']}');";
 $conn = new mysqli($hostname, $username, $password, $database); // New database connection
 $week_events = array();
 $events = mysqli_query($conn, $query);
