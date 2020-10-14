@@ -1,7 +1,10 @@
 
+document.getElementById("hint").hidden = true;
+
 function showSearchResult(keyword) {
 
     if (keyword.toString().length < 3) {
+        document.getElementById("hint").hidden = true;
         while (document.getElementById("hint").children.length != 0)
             document.getElementById("hint").children.item(0).remove();
         return;
@@ -12,7 +15,7 @@ function showSearchResult(keyword) {
                 var parser = new DOMParser();
                 var responseDoc = parser.parseFromString(this.responseText, "text/html")
                 document.getElementById("hint").innerHTML = responseDoc.getElementById("hint").innerHTML;
-                // document.getElementById("myDropdown").classList.toggle("show");
+                document.getElementById("hint").hidden = false;
             }
         }
         xmlhttp.open("GET", "home.php?keywords=" + keyword, true);
@@ -85,7 +88,7 @@ for (var i=0; i < showButtons.length; i++){
 }
 
 
-document.getElementById("myDropdown").classList.toggle("show");
+
 
 
 
