@@ -156,7 +156,7 @@ BEGIN
 END$$
 DELIMITER ;
 		 
-		 
+DELIMITER $$ 
 CREATE PROCEDURE `add_weekly`(
 IN event_id int(11),
 IN in_event_year year(4),
@@ -164,8 +164,9 @@ IN in_week_of_year int(11) unsigned)
 BEGIN
     insert into front_weekly(event_id, week_of_year, event_year) values (event_id, in_week_of_year, in_event_year);
 END
+DELIMITER ;
 		 
-		 
+DELIMITER $$ 	 
 CREATE PROCEDURE `add_daily`(
 IN in_event_id INT(11),
 IN in_group_id INT(10),
@@ -175,10 +176,11 @@ IN in_start_time TIME
 BEGIN
 	insert into front_daily(event_id, group_id, day_of_week, start_time) values (in_event_id, in_group_id, in_day_of_week, start_time);
 END
+DELIMITER ;
 
 		 
 		 
-		 
+DELIMITER $$ 
 CREATE PROCEDURE `add_action`(
 IN event_id int(11),
 IN in_cluster_name VARCHAR(128),
@@ -195,13 +197,15 @@ BEGIN
     insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_duration, cluster_id, 0);
     
 END
+DELIMITER ;
 		 
 		 
-		 
+DELIMITER $$ 	 
 CREATE PROCEDURE `get_machine_group_id_by_name`(
 IN in_machine_group varchar(100)
 )
 BEGIN
 	select group_id from front_group where machine_group = in_machine_group;
 END
+DELIMITER ;
 
