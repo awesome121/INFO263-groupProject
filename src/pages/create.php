@@ -4,9 +4,6 @@
     // Require the database credentials.
     require_once('../db_config.php');
 
-    // Open a database connection.
-    $conn = new mysqli($hostname, $username, $password, $database);
-
     // Get all the data that has been posted from the event creation form.
     $event_name = $_POST["event_name"];
     $cluster = $_POST["cluster"];
@@ -15,6 +12,13 @@
     $end_time = $_POST["end_time"];
     $machine_groups = $_POST["machine_groups"];
     $notes = $_POST["notes"];
+    $year = explode('/', $date)[2];
+    $day_of_week = (new DateTime(join('-', explode('/', $date))))->format('w');
+    $week_of_year = (new DateTime(join('-', explode('/', $date))))->format('W');
+    $start_date = new DateTime($start_time);
+    $since_start = $start_date->diff(new DateTime($end_time), true);
+    $duration = $since_start->format('%H:%I:%S');
+
 
     // Only create an event if all the required fields have been filled in.
     if ($event_name && $cluster && $date && $start_time && $end_time && $machine_groups) {
@@ -22,18 +26,49 @@
 
         /* Parameter for add_event procedure
         in_event_name VARCHAR(255),
+
         in_cluster_name VARCHAR(128),
-        in_time_off_set_before_start TIME
-        in_duration TIME
+        in_time_off_set_before_start TIME  //default to 5 mins
+        in_duration TIME  $end_time-$start_time
+
         in_event_year year(4)
         in_week_of_year int(11)
         */
+        // Open a database connection.
+        $conn = new mysqli($hostname, $username, $password, $database);
+        $query = "call add_event('$event_name');";
+        $add_event = mysqli_query($conn, $query);
+        $row = mysqli_fetch_row($add_event);
+        $event_id = $row[0];
 
-        // $query = "call add_event('event_name', '{$_POST['subject']}');";
-        // $events = mysqli_query($conn, $query);
+        $conn = new mysqli($hostname, $username, $password, $database);
+        $query = "call add_action($event_id, '$cluster', '-00:05:00', '$duration');";
+        $add_action = mysqli_query($conn, $query);
 
-        // Set the event created variable to true so that we can show the event created successfully message on the page below.
+        $conn = new mysqli($hostname, $username, $password, $database);
+        $query = "call add_weekly($event_id, $year, $week_of_year);";
+        $add_weekly = mysqli_query($conn, $query);
+
+        $machine_group_ids = array();
+        $conn = new mysqli($hostname, $username, $password, $database);
+        foreach ($machine_groups as $machine_group) {
+            $query = "call get_machine_group_id_by_name('$machine_group');";
+            $get_machine_group_id_by_name = mysqli_query($conn, $query);
+            $group_id = mysqli_fetch_row($get_machine_group_id_by_name)[0];
+            array_push($machine_group_ids, $group_id);
+        }
+
+        foreach ($machine_group_ids as $group_id){
+            $conn = new mysqli($hostname, $username, $password, $database);
+            $start_time = (new DateTime($start_time))->format('H:i:s');
+            $query = "call add_daily($event_id, $group_id, $day_of_week, '$start_time');";
+            $add_daily = mysqli_query($conn, $query);
+        }
+
+
         $event_created = true;
+        // Set the event created variable to true so that we can show the event created successfully message on the page below.
+
     };
 ?>
 
@@ -151,6 +186,7 @@
                                         <option selected disabled></option>
 
                                         <?php
+                                            $conn = new mysqli($hostname, $username, $password, $database);
                                             $query = "call get_cluster_name();";
 
                                             $result = mysqli_query($conn, $query);
@@ -174,17 +210,17 @@
                                 <div class="form-group">
                                     <label for="start_time">Start Time <span class="text-danger">*</span></label>
 
-                                    <input class="form-control" type="time" name="start_time" id="start_time" placeholder="--:-- --" required>
+                                    <input class="form-control" type="time" name="start_time" id="start_time" placeholder="--:--" required>
 
-                                    <small class="form-text text-muted">Enter the test start time, computers will unlock 5 minutes earlier.</small>
+                                    <small class="form-text text-muted">Enter the test start time, computers will lock 5 minutes earlier.</small>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="end_time">End Time <span class="text-danger">*</span></label>
 
-                                    <input class="form-control" type="time" name="end_time" id="end_time" placeholder="--:-- --" required>
+                                    <input class="form-control" type="time" name="end_time" id="end_time" placeholder="--:--" required>
 
-                                    <small class="form-text text-muted">Enter the test end time, computers will lock 5 minutes later.</small>
+                                    <small class="form-text text-muted">Enter the test end time, computers will switch back to labs 5 minutes later.</small>
                                 </div>
 
                                 <div class="form-group">
@@ -192,10 +228,10 @@
 
                                     <select class="form-control" name="machine_groups[]" id="machine_groups" multiple required>
                                         <?php
+                                            $conn = new mysqli($hostname, $username, $password, $database);
                                             $query = "call get_machine_group();";
 
                                             $result = mysqli_query($conn, $query);
-                                        
                                             // Print out each machine group from the database as a select option.
                                             while ($row = mysqli_fetch_row($result)) {
                                                 $machine_group = $row[0];
