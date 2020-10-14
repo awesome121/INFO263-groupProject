@@ -63,7 +63,7 @@ setcookie('keywords', $_GET['keywords']);
 
                                 } else {
                                     foreach ($hint as $key => $value) {
-                                        echo "<a class='dropdown-item' href='search_results.php?q=$keywords'>$value</a> ";
+                                        echo "<a class='dropdown-item' href='search_results.php?q=$value'>$value</a> ";
                                     };
                                 };
                             };
