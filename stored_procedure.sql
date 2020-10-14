@@ -6,9 +6,13 @@ DROP procedure IF EXISTS `show_events_past`;
 DROP procedure IF EXISTS `show_events_future`;
 DROP procedure IF EXISTS `show_week_events`;
 DROP procedure IF EXISTS `show_search_results`;
-DROP procedure IF EXISTS `add_event`;
 DROP procedure IF EXISTS `get_cluster_name`;
 DROP procedure IF EXISTS `get_machine_group`;
+DROP procedure IF EXISTS `add_event`;
+DROP procedure IF EXISTS `add_weekly`;
+DROP procedure IF EXISTS `add_daily`;
+DROP procedure IF EXISTS `add_action`;
+DROP procedure IF EXISTS `egt_machine_group_id_by_name`;
 
 
 CREATE TABLE `front_user` (
@@ -120,32 +124,6 @@ END$$
 
 DELIMITER ;
 	       
-DELIMITER $$	       
-CREATE PROCEDURE `add_event`(
-IN in_event_name VARCHAR(255),
-IN in_cluster_name VARCHAR(128),
-IN in_time_off_set_before_start TIME,
-IN in_duration TIME, 
-IN in_event_year year(4),
-IN in_week_of_year int(11) unsigned
-)
-BEGIN
-	/* insert evnet and get the assigned event id */
-	insert into front_event(event_name, status) values (in_event_name, 1);
-    set @event_id  = (select event_id from front_event where event_name = in_event_name);
-    
-    /* get the corresponding cluster id */
-    set @cluster_id = (select cluster_id from front_cluster where cluster_name = in_cluster_name);
-    
-    /* insert actions and week */
-    insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_time_off_set_before_start, 3, 0);
-    insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_time_off_set_before_start, cluster_id, 1);
-    insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_duration, 3, 1);
-    insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_duration, cluster_id, 0);
-    insert into front_weekly(event_id, week_of_year, event_year) values (event_id, in_week_of_year, in_event_year);
-    
-END$$
-DELIMITER ;
 	       
 	
 DELIMITER $$       
@@ -164,4 +142,66 @@ BEGIN
 END$$
 
 DELIMITER ;
- 
+		 
+
+DELIMITER $$	       
+CREATE PROCEDURE `add_event`(
+IN in_event_name VARCHAR(255)
+)
+BEGIN
+	/* insert evnet and get the assigned event id */
+	insert into front_event(event_name, status) values (in_event_name, 1);
+    select event_id from front_event where event_name = in_event_name;
+    
+END$$
+DELIMITER ;
+		 
+		 
+CREATE PROCEDURE `add_weekly`(
+IN event_id int(11),
+IN in_event_year year(4),
+IN in_week_of_year int(11) unsigned)
+BEGIN
+    insert into front_weekly(event_id, week_of_year, event_year) values (event_id, in_week_of_year, in_event_year);
+END
+		 
+		 
+CREATE PROCEDURE `add_daily`(
+IN in_event_id INT(11),
+IN in_group_id INT(10),
+IN in_day_of_week INT(11),
+IN in_start_time TIME
+)
+BEGIN
+	insert into front_daily(event_id, group_id, day_of_week, start_time) values (in_event_id, in_group_id, in_day_of_week, start_time);
+END
+
+		 
+		 
+		 
+CREATE PROCEDURE `add_action`(
+IN event_id int(11),
+IN in_cluster_name VARCHAR(128),
+IN in_time_off_set_before_start TIME,
+IN in_duration TIME
+)
+BEGIN
+/* get the corresponding cluster id */
+    set @cluster_id = (select cluster_id from front_cluster where cluster_name = in_cluster_name);
+    /* insert actions and week */
+    insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_time_off_set_before_start, 3, 0);
+    insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_time_off_set_before_start, cluster_id, 1);
+    insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_duration, 3, 1);
+    insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_duration, cluster_id, 0);
+    
+END
+		 
+		 
+		 
+CREATE PROCEDURE `get_machine_group_id_by_name`(
+IN in_machine_group varchar(100)
+)
+BEGIN
+	select group_id from front_group where machine_group = in_machine_group;
+END
+
