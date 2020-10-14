@@ -1,4 +1,4 @@
-USE `INFO263_lcs57_tserver`; /********** Please change your database name *********/
+USE `INFO263_cgo54_tserver`; /********** Please change your database name *********/
 DROP table IF EXISTS `front_user`;
 DROP view IF EXISTS `vw_front_event_with_day_of_week`;
 DROP procedure IF EXISTS `get_user`;
@@ -12,7 +12,7 @@ DROP procedure IF EXISTS `add_event`;
 DROP procedure IF EXISTS `add_weekly`;
 DROP procedure IF EXISTS `add_daily`;
 DROP procedure IF EXISTS `add_action`;
-DROP procedure IF EXISTS `egt_machine_group_id_by_name`;
+DROP procedure IF EXISTS `get_machine_group_id_by_name`;
 
 
 CREATE TABLE `front_user` (
@@ -63,7 +63,6 @@ ADDTIME(`d`.`start_time`, `a`.`time_offset`) AS `time`,
             AND (`d`.`daily_id` = `el`.`daily_id`)
             AND (`fw`.`weekly_id` = `el`.`weekly_id`))))
     ORDER BY `fw`.`week_of_year` , `d`.`day_of_week` , ADDTIME(`d`.`start_time`, `a`.`time_offset`) , `g`.`machine_group`;
-    vw_front_group_client
 	       
 	       
 	       
@@ -163,7 +162,7 @@ IN in_event_year year(4),
 IN in_week_of_year int(11) unsigned)
 BEGIN
     insert into front_weekly(event_id, week_of_year, event_year) values (event_id, in_week_of_year, in_event_year);
-END
+END$$
 DELIMITER ;
 		 
 DELIMITER $$ 	 
@@ -175,7 +174,7 @@ IN in_start_time TIME
 )
 BEGIN
 	insert into front_daily(event_id, group_id, day_of_week, start_time) values (in_event_id, in_group_id, in_day_of_week, start_time);
-END
+END$$
 DELIMITER ;
 
 		 
@@ -196,7 +195,7 @@ BEGIN
     insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_duration, 3, 1);
     insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_duration, cluster_id, 0);
     
-END
+END$$
 DELIMITER ;
 		 
 		 
@@ -206,6 +205,6 @@ IN in_machine_group varchar(100)
 )
 BEGIN
 	select group_id from front_group where machine_group = in_machine_group;
-END
+END$$
 DELIMITER ;
 
