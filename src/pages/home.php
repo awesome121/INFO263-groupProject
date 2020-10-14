@@ -89,20 +89,21 @@ while ($row != NULL) {
                     
                     <button class="btn btn-secondary my-2 my-sm-0" type="button" onclick="window.location.href='search_results.php'"><i class="fa fa-search"></i></button>
                     
-                    <div id="hint" class="dropdown-menu">
+                    <d id="hint" class="dropdown-menu" hidden="true">
                         <?php
                             if (isset($keywords)) {
                                 if ($keywords != "" and sizeof($hint) == 0) {
+
                                     echo "<a class='dropdown-item'>No results</a>";
 
                                 } else {
                                     foreach ($hint as $key => $value) {
-                                        echo "<a class='dropdown-item' href='search_results.php?q=$keywords'>$value</a> ";
+                                        echo "<a class='dropdown-item' href='search_results.php?q=$value'>$value</a> ";
                                     };
                                 };
                             };
                         ?>
-                    </div>
+                    </d>
                 </div>
             </div>
 
