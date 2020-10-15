@@ -6,7 +6,7 @@
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     };
-
+    // user authentication - verifying accounts
     $user_info = verifyAccount($conn);
 
     if ($_POST["input_username"] != "" && $_POST["input_password"] != "") {
@@ -18,7 +18,7 @@
             $login_error = "Invalid username or password";
         };
     };
-
+    // checking validity of username and password from what stored in the database
     /**
      * A function to verify user's input username and password
      *
@@ -56,6 +56,7 @@
         <!-- Bootstrap CSS -->
         <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
     </head>
     
     <body class="h-100">
