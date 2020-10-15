@@ -28,8 +28,10 @@ $searched = 'stat';
 setcookie('keywords', $_GET['keywords']);
 
 if (!isset($_GET['startDate'])) {
-    $_GET['startDate'] = '2020-05-11';
-    $_GET['endDate'] = '2020-05-17';
+    //Gets Monday of Current week
+    $_GET['startDate'] = date("Y-m-d", strtotime('monday this week'));
+    //Gets Sunday of current week
+    $_GET['endDate'] = date("Y-m-d", strtotime('sunday this week'));
 }
 $query = "call show_week_events('{$_GET['startDate']}', '{$_GET['endDate']}');";
 $conn = new mysqli($hostname, $username, $password, $database); // New database connection
@@ -88,7 +90,7 @@ while ($row != NULL) {
                     <input class="form-control mr-sm-2" type="search" placeholder="Search events" onkeyup="showSearchResult(this.value);" data-toggle="dropdown" aria-label="Search">
                     
                     <button class="btn btn-secondary my-2 my-sm-0" type="button" onclick="window.location.href='search_results.php'"><i class="fa fa-search"></i></button>
-                    
+
                     <d id="hint" class="dropdown-menu" hidden="true">
                         <?php
                             if (isset($keywords)) {

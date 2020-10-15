@@ -97,6 +97,7 @@ form.searchbar::after {
     z-index: 2;
 }
 
+/* not being used currently
 .dropdown-content {
     display: none;
     position: absolute;
@@ -113,7 +114,7 @@ form.searchbar::after {
     display: block;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {background-color: #f1f1f1}*/
 
 .btn-primary{
     background: #999999;
