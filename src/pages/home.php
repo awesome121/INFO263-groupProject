@@ -12,19 +12,8 @@
         }
         $row = mysqli_fetch_row($events);
     }
-//$query = "call t_server.show_events_future();";
-//$result2 = mysqli_query($conn, $query);
-//$row = mysqli_fetch_row($result2);
-//while($keywords != "" and $row != NULL and sizeof($hint) < 7){
-//    if (strpos(strtolower(explode(" ", $row[0])[0]), strtolower($keywords)) !== false and !array_key_exists($row[8], $hint)){
-//        $hint[$row[8]] = $row[0];
-//    }
-//    $row = mysqli_fetch_row($result2);
-//}
-if (sizeof($hint) == 7) {
-    array_push($hint, ". . . . . . .");
-}
-$searched = 'stat';
+
+
 setcookie('keywords', $_GET['keywords']);
 
 if (!isset($_GET['startDate'])) {
