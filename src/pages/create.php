@@ -26,16 +26,6 @@
     if ($event_name && $cluster && $date && $start_time && $end_time && $machine_groups) {
         // TODO: Save event in database, maybe check that start time is before end time and date is in the future?
 
-        /* Parameter for add_event procedure
-        in_event_name VARCHAR(255),
-
-        in_cluster_name VARCHAR(128),
-        in_time_off_set_before_start TIME  //default to 5 mins
-        in_duration TIME  $end_time-$start_time
-
-        in_event_year year(4)
-        in_week_of_year int(11)
-        */
         // Open a database connection.
         $conn = new mysqli($hostname, $username, $password, $database);
         $query = "call add_event('$event_name');";
@@ -44,8 +34,16 @@
         $event_id = $row[0];
         //echo "event_name: " . $event_name . '<br>';
 
+
         $conn = new mysqli($hostname, $username, $password, $database);
-        $query = "call add_action($event_id, '$cluster', '-00:05:00', '$duration');";
+        $query = "call get_cluster_id_by_name('$cluster');";
+        $get_cluster_id_by_name = mysqli_query($conn, $query);
+        $row = mysqli_fetch_row($get_cluster_id_by_name);
+        $cluster_id = $row[0];
+
+
+        $conn = new mysqli($hostname, $username, $password, $database);
+        $query = "call add_action($event_id, '$cluster_id', '-00:05:00', '$duration');";
         $add_action = mysqli_query($conn, $query);
         //echo "event_id: " . $event_id . 'cluster:' . $cluster . 'duration: ' . $duration . '<br>';
 
@@ -66,10 +64,13 @@
         foreach ($machine_group_ids as $group_id){
             $conn = new mysqli($hostname, $username, $password, $database);
             $start_time = (new DateTime($start_time))->format('H:i:s');
+            echo $start_time;
             $query = "call add_daily($event_id, $group_id, $day_of_week, '$start_time');";
             $add_daily = mysqli_query($conn, $query);
             //echo 'group_id' . $group_id . 'day_of_week' . $day_of_week . 'start_time:'. $start_time . '<br>';
         }
+
+
 
 
         $event_created = true;
