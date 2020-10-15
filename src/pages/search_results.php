@@ -92,7 +92,10 @@ setcookie('keywords', $_GET['keywords']);
 
     //shows events that have happened in the past ordered by date descending
 
-    $search_value = $_COOKIE['keywords'];
+    $search_value = $_GET['q'];
+    if ($search_value == '') {
+        $search_value = $_COOKIE['keywords'];
+    }
 
     $query = "call show_search_results('$search_value')";
     $result = $conn->query($query);
