@@ -1,8 +1,13 @@
 
-document.getElementById("hint").hidden = true;
 
+
+/**
+ * A function to search suggestion using Ajax approach
+ * The function will be called once the user's key is up, but it has to be at least 3 characters
+ * @param string keyword
+ *
+ */
 function showSearchResult(keyword) {
-
     if (keyword.toString().length < 3) {
         document.getElementById("hint").hidden = true;
         while (document.getElementById("hint").children.length != 0)
@@ -23,20 +28,13 @@ function showSearchResult(keyword) {
     }
 }
 
-function openWin() {
-    //opens in new tab cannot figure out how to open it in the same one. Everything I tried did not work.
-    document.getElementById("input").textContent;
-    window.open( "search_results.php?searched=");
-    return false;
-}
-
-/*function printSearchResults(){
-    window.location.href(search_results.php)
-    var x = document.getElementById("myInput");
-    document.getElementById("demo").innerHTML = "You are searching for: " + x.value;
-}*/
 
 
+/**
+ * A function to adjust calendar, left is true if the calendar is switching to the left, false otherwise
+ * @param bool left
+ *
+ */
 function calendarSwitch(left){
     var date = document.getElementById("currentDate").innerText.split(" - ");
     var startDate = new Date(date[0]);
@@ -60,7 +58,7 @@ function calendarSwitch(left){
     }
     startDate = startDate.join('-');
     endDate = endDate.join('-');
-
+    
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -74,19 +72,29 @@ function calendarSwitch(left){
     xmlhttp.send();
 }
 
-var showButtons = document.getElementsByClassName("btn-primary");
-for (var i=0; i < showButtons.length; i++){
-    var button = showButtons.item(i);
-    button.addEventListener("click", function(){
-        if (this.innerHTML == "Show less"){
-            this.innerHTML = "Show more";
-        } else {
-            this.innerHTML = "Show less";
-        }
 
-    });
+/**
+ * A function to initialise the toggling buttons' property
+ *
+ */
+function init_button() {
+    var showButtons = document.getElementsByClassName("btn-primary");
+    for (var i = 0; i < showButtons.length; i++) {
+        var button = showButtons.item(i);
+        button.addEventListener("click", function () {
+            if (this.innerHTML == "Show less") {
+                this.innerHTML = "Show more";
+            } else {
+                this.innerHTML = "Show less";
+            }
+
+        });
+    }
 }
 
+
+init_button();
+document.getElementById("hint").hidden = true;
 
 
 
