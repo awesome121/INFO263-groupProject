@@ -62,8 +62,8 @@ while ($row != NULL) {
         <div id="sticker">
         <nav id="nav_bar" class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #999999;">
             <!-- Logo -->
-            <a class="navbar-brand" href="#">
-                <img src="../images/UC_logo.png" height="50">
+            <a class="navbar-brand" href="https://www.canterbury.ac.nz" target="_blank">
+                <img src="../images/UC_logo.png" height="50" >
             </a>
 
             <!-- Links -->
