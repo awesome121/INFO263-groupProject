@@ -173,7 +173,7 @@ IN in_day_of_week INT(11),
 IN in_start_time TIME
 )
 BEGIN
-	insert into front_daily(event_id, group_id, day_of_week, start_time) values (in_event_id, in_group_id, in_day_of_week, start_time);
+	insert into front_daily(event_id, group_id, day_of_week, start_time) values (in_event_id, in_group_id, in_day_of_week, in_start_time);
 END$$
 DELIMITER ;
 
