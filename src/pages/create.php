@@ -64,7 +64,6 @@
         foreach ($machine_group_ids as $group_id){
             $conn = new mysqli($hostname, $username, $password, $database);
             $start_time = (new DateTime($start_time))->format('H:i:s');
-            echo $start_time;
             $query = "call add_daily($event_id, $group_id, $day_of_week, '$start_time');";
             $add_daily = mysqli_query($conn, $query);
             //echo 'group_id' . $group_id . 'day_of_week' . $day_of_week . 'start_time:'. $start_time . '<br>';
