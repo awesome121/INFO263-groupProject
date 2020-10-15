@@ -1,6 +1,14 @@
 <?php
-    require_once('../db_config.php');
-    $conn = new mysqli($hostname, $username, $password, $database); // New database connection
+
+setcookie('keywords', $_GET['keywords']);
+require_once('../db_config.php');
+
+/**
+ * Get all the past events
+ *
+ */
+function get_past_events($conn)
+{
     $keywords = $_GET['keywords'];
     $hint = array();
     $query = "call show_events_past();";
@@ -12,361 +20,385 @@
         }
         $row = mysqli_fetch_row($events);
     }
-
-
-setcookie('keywords', $_GET['keywords']);
-
-if (!isset($_GET['startDate'])) {
-    //Gets Monday of Current week
-    $_GET['startDate'] = date("Y-m-d", strtotime('monday this week'));
-    //Gets Sunday of current week
-    $_GET['endDate'] = date("Y-m-d", strtotime('sunday this week'));
+    return $hint;
 }
-$query = "call show_week_events('{$_GET['startDate']}', '{$_GET['endDate']}');";
-$conn = new mysqli($hostname, $username, $password, $database); // New database connection
-$week_events = array();
-$events = mysqli_query($conn, $query);
-$row = mysqli_fetch_row($events);
-while ($row != NULL) {
-    array_push($week_events, $row);
+
+
+/**
+ * show all the past events in the specified date range
+ *
+ */
+function show_week_events($conn)
+{
+    if (!isset($_GET['startDate'])) {
+        //Gets Monday of Current week
+        $_GET['startDate'] = date("Y-m-d", strtotime('monday this week'));
+        //Gets Sunday of current week
+        $_GET['endDate'] = date("Y-m-d", strtotime('sunday this week'));
+    }
+    $query = "call show_week_events('{$_GET['startDate']}', '{$_GET['endDate']}');";
+    $week_events = array();
+    $events = mysqli_query($conn, $query);
     $row = mysqli_fetch_row($events);
+    while ($row != NULL) {
+        array_push($week_events, $row);
+        $row = mysqli_fetch_row($events);
+    }
+    return $week_events;
 }
+
+
+
+$conn = new mysqli($hostname, $username, $password, $database); // New database connection
+$hint = get_past_events($conn);
+$conn = new mysqli($hostname, $username, $password, $database); // New database connection
+$week_events = show_week_events($conn);
+
 ?>
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Home - TServer</title>
+<head>
+    <title>Home - TServer</title>
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-              integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="../css/home.css" />
-        <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
-    </head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/home.css"/>
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+</head>
 
-    <body>
-        <!-- Header -->
-        <div id="sticker">
-        <nav id="nav_bar" class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #999999;">
-            <!-- Logo -->
-            <a class="navbar-brand" href="https://www.canterbury.ac.nz" target="_blank">
-                <img src="../images/UC_logo.png" height="50" >
-            </a>
+<body>
+<!-- Header -->
+<div id="sticker">
+    <nav id="nav_bar" class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #999999;">
+        <!-- Logo -->
+        <a class="navbar-brand" href="https://www.canterbury.ac.nz" target="_blank">
+            <img src="../images/UC_logo.png" height="50">
+        </a>
 
-            <!-- Links -->
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="home.php">Home</a>
-                </li>
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="home.php">Home</a>
+            </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="create.php">Create Event</a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link" href="create.php">Create Event</a>
+            </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="future.php">Future Events</a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link" href="future.php">Future Events</a>
+            </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="past.php">Past Events</a>
-                </li>
-            </ul>
+            <li class="nav-item">
+                <a class="nav-link" href="past.php">Past Events</a>
+            </li>
+        </ul>
 
-            <div class="form-inline my-2 my-lg-0">
-                <div class="dropdown">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search events" onkeyup="showSearchResult(this.value);" data-toggle="dropdown" aria-label="Search">
-                    
-                    <button class="btn btn-secondary my-2 my-sm-0" type="button" onclick="window.location.href='search_results.php'"><i class="fa fa-search"></i></button>
+        <div class="form-inline my-2 my-lg-0">
+            <div class="dropdown">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search events"
+                       onkeyup="showSearchResult(this.value);" data-toggle="dropdown" aria-label="Search">
 
-                    <d id="hint" class="dropdown-menu" hidden="true">
-                        <?php
-                            if (isset($keywords)) {
-                                if ($keywords != "" and sizeof($hint) == 0) {
+                <button class="btn btn-secondary my-2 my-sm-0" type="button"
+                        onclick="window.location.href='search_results.php'"><i class="fa fa-search"></i></button>
 
-                                    echo "<a class='dropdown-item'>No results</a>";
+                <d id="hint" class="dropdown-menu" hidden="true">
+                    <?php
+                    // Produce a list of dropdown items
+                    if (isset($keywords)) {
+                        if ($keywords != "" and sizeof($hint) == 0) {
 
-                                } else {
-                                    foreach ($hint as $key => $value) {
-                                        echo "<a class='dropdown-item' href='search_results.php?q=$value'>$value</a> ";
-                                    };
-                                };
+                            echo "<a class='dropdown-item'>No results</a>";
+
+                        } else {
+                            foreach ($hint as $key => $value) {
+                                echo "<a class='dropdown-item' href='search_results.php?q=$value'>$value</a> ";
                             };
-                        ?>
-                    </d>
-                </div>
+                        };
+                    };
+                    ?>
+                </d>
             </div>
-
-            <ul class="navbar-nav ml-3">
-                <li class="nav-item">
-                    <a class="nav-link" href="login.php">Logout</a>
-                </li>
-            </ul>
-        </nav>
-
-        <div id="calendar" class="row mt-3" >
-
-                <div class="col" id="column">
-                    <h1>Current Week Events</h1>
-                    <button onclick="calendarSwitch(1)" type="button" class="btn btn-secondary"><</button>
-                    <span id="currentDate" class="h4"><?php
-                        echo $_GET['startDate'] . " - " . $_GET['endDate'];
-                    ?></span> <!-- insert current date -->
-                    <button onclick="calendarSwitch(0)" type="button" class="btn btn-secondary">></button>
-                </div>
-            </div>
-
-
-        <div id="weekdays" class="row mt-2">
-                <div class="col pr-0">
-                    <div class="mb-2 h4" style="text-align: center">
-                        Monday
-                    </div>
-                </div>
-
-                <div class="col pr-0">
-                    <div class="mb-2 h4" style="text-align: center">
-                        Tuesday
-                    </div>
-                </div>
-
-                <div class="col pr-0">
-                    <div class="mb-2 h4" style="text-align: center">
-                        Wednesday
-                    </div>
-                </div>
-
-                <div class="col pr-0">
-                    <div class="mb-2 h4" style="text-align: center">
-                        Thursday
-                    </div>
-                </div>
-
-                <div class="col pr-0">
-                    <div class="mb-2 h4" style="text-align: center">
-                        Friday
-                    </div>
-                </div>
-
-                <div class="col pr-0">
-                    <div class="mb-2 h4" style="text-align: center">
-                        Saturday
-                    </div>
-                </div>
-
-                <div class="col pr-0">
-                    <div class="mb-2 h4" style="text-align: center">
-                        Sunday
-                    </div>
-                </div>
-
-            </div>
-
         </div>
 
-        <div id="mainFrame" class="container-fluid">
-            <div class="row mt-2">
+        <ul class="navbar-nav ml-3">
+            <li class="nav-item">
+                <a class="nav-link" href="login.php">Logout</a>
+            </li>
+        </ul>
+    </nav>
 
-                <div class="col pr-0">
-                    <?php
-                    $count = 0;
-                    foreach ($week_events as $row) {
-                        if ($row[14] == 1) { // Monday
-                            echo '<div class="card bg-light mb-3">';
-                            echo "<div class=\"card-header\">{$row[0]}</div>";
-                            echo "<div class=\"text-center\" >
+    <div id="calendar" class="row mt-3">
+
+        <div class="col" id="column">
+            <h1>Current Week Events</h1>
+            <button onclick="calendarSwitch(1)" type="button" class="btn btn-secondary"><</button>
+            <span id="currentDate" class="h4"><?php
+                echo $_GET['startDate'] . " - " . $_GET['endDate'];
+                ?></span> <!-- insert current date -->
+            <button onclick="calendarSwitch(0)" type="button" class="btn btn-secondary">></button>
+        </div>
+    </div>
+
+
+    <div id="weekdays" class="row mt-2">
+        <div class="col pr-0">
+            <div class="mb-2 h4" style="text-align: center">
+                Monday
+            </div>
+        </div>
+
+        <div class="col pr-0">
+            <div class="mb-2 h4" style="text-align: center">
+                Tuesday
+            </div>
+        </div>
+
+        <div class="col pr-0">
+            <div class="mb-2 h4" style="text-align: center">
+                Wednesday
+            </div>
+        </div>
+
+        <div class="col pr-0">
+            <div class="mb-2 h4" style="text-align: center">
+                Thursday
+            </div>
+        </div>
+
+        <div class="col pr-0">
+            <div class="mb-2 h4" style="text-align: center">
+                Friday
+            </div>
+        </div>
+
+        <div class="col pr-0">
+            <div class="mb-2 h4" style="text-align: center">
+                Saturday
+            </div>
+        </div>
+
+        <div class="col pr-0">
+            <div class="mb-2 h4" style="text-align: center">
+                Sunday
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div id="mainFrame" class="container-fluid">
+    <div class="row mt-2">
+
+        <div class="col pr-0">
+            <?php
+            $count = 0;
+            foreach ($week_events as $row) {
+                if ($row[14] == 1) { //Produce a list of cards for Monday
+                    echo '<div class="card bg-light mb-3">';
+                    echo "<div class=\"card-header\">{$row[0]}</div>";
+                    echo "<div class=\"text-center\" >
                             <a id=\"mondayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#monday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
                         </div>";
-                            echo "<div class=\"collapse multi-collapse\" id=\"monday{$count}\">";
-                            echo "<div class=\"card-body\">";
-                            echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                    echo "<div class=\"collapse multi-collapse\" id=\"monday{$count}\">";
+                    echo "<div class=\"card-body\">";
+                    echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
                                 <p class=\"card-text\"><b>Date:</b> {$row[5]}</p>
                                 <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
                                 <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
                                 <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
-                            echo '</div></div></div>';
-                            $count += 1;
-                        }
-                    }
+                    echo '</div></div></div>';
+                    $count += 1;
+                }
+            }
 
 
-                    ?>
+            ?>
 
-                </div>
-
-
-                <div class="col pr-0">
-
-
-                    <?php
-                    $count = 0;
-                    foreach ($week_events as $row) {
-                        if ($row[14] == 2) { // Tuesday
-                            echo '<div class="card bg-light mb-3">';
-                            echo "<div class=\"card-header\">{$row[0]}</div>";
-                            echo "<div class=\"text-center\" >
-                            <a id=\"tuesdayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#tuesday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
-                        </div>";
-                            echo "<div class=\"collapse multi-collapse\" id=\"tuesday{$count}\">";
-                            echo "<div class=\"card-body\">";
-                            echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
-                                <p class=\"card-text\"><b>Date:</b> {$row[5]}</p>
-                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
-                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
-                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
-                            echo '</div></div></div>';
-                            $count += 1;
-                        }
-
-                    }
-
-                    ?>
-
-
-                </div>
-
-
-                <div class="col pr-0">
-                    <?php
-                    $count = 0;
-                    foreach ($week_events as $row) {
-                        if ($row[14] == 3) { // Wednesday
-                            echo '<div class="card bg-light mb-3">';
-                            echo "<div class=\"card-header\">{$row[0]}</div>";
-                            echo "<div class=\"text-center\" >
-                            <a id=\"wednesdayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#wednesday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
-                        </div>";
-                            echo "<div class=\"collapse multi-collapse\" id=\"wednesday{$count}\">";
-                            echo "<div class=\"card-body\">";
-                            echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
-                                <p class=\"card-text\"><b>Date:</b> {$row[5]}</p>
-                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
-                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
-                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
-                            echo '</div></div></div>';
-                            $count += 1;
-                        }
-
-                    }
-
-                    ?>
-                </div>
-
-
-                <div class="col pr-0">
-
-                    <?php
-                    $count = 0;
-                    foreach ($week_events as $row) {
-                        if ($row[14] == 4) { // Thursday
-                            echo '<div class="card bg-light mb-3">';
-                            echo "<div class=\"card-header\">{$row[0]}</div>";
-                            echo "<div class=\"text-center\" >
-                            <a id=\"thursdayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#thursday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
-                        </div>";
-                            echo "<div class=\"collapse multi-collapse\" id=\"thursday{$count}\">";
-                            echo "<div class=\"card-body\">";
-                            echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
-                                <p class=\"card-text\"><b>Date:</b> {$row[5]}</p>
-                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
-                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
-                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
-                            echo '</div></div></div>';
-                            $count += 1;
-                        }
-                    }
-
-                    ?>
-                </div>
-
-
-                <div class="col pr-0">
-                    <?php
-                    $count = 0;
-                    foreach ($week_events as $row) {
-                        if ($row[14] == 5) { // Friday
-                            echo '<div class="card bg-light mb-3">';
-                            echo "<div class=\"card-header\"> {$row[0]}</div>";
-                            echo "<div class=\"text-center\" >
-                            <a id=\"fridayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#friday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
-                        </div>";
-                            echo "<div class=\"collapse multi-collapse\" id=\"friday{$count}\">";
-                            echo "<div class=\"card-body\">";
-                            echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
-                                <p class=\"card-text\"><b>Date:</b>{$row[5]}</p>
-                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
-                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
-                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
-                            echo '</div></div></div>';
-                            $count += 1;
-                        }
-                    }
-
-                    ?>
-                </div>
-
-
-                <div class="col pr-0">
-                    <?php
-                    $count = 0;
-                    foreach ($week_events as $row) {
-                        if ($row[14] == 6) { // Saturday
-                            echo '<div class="card bg-light mb-3">';
-                            echo "<div class=\"card-header\"> {$row[0]}</div>";
-                            echo "<div class=\"text-center\" >
-                            <a id=\"saturdayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#saturday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
-                        </div>";
-                            echo "<div class=\"collapse multi-collapse\" id=\"saturday{$count}\">";
-                            echo "<div class=\"card-body\">";
-                            echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
-                                <p class=\"card-text\"><b>Date:</b>{$row[5]}</p>
-                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
-                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
-                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
-                            echo '</div></div></div>';
-                            $count += 1;
-                        }
-                    }
-
-                    ?>
-                </div>
-
-
-                <div class="col pr-0">
-                    <?php
-                    $count = 0;
-                    foreach ($week_events as $row) {
-                        if ($row[14] == 0) { // Sunday
-                            echo '<div class="card bg-light mb-3">';
-                            echo "<div class=\"card-header\">{$row[0]}</div>";
-                            echo "<div class=\"text-center\" >
-                            <a id=\"sundayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#sunday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
-                        </div>";
-                            echo "<div class=\"collapse multi-collapse\" id=\"sunday{$count}\">";
-                            echo "<div class=\"card-body\">";
-                            echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
-                                <p class=\"card-text\"><b>Date:</b> {$row[5]}</p>
-                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
-                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
-                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
-                            echo '</div></div></div>';
-                            $count += 1;
-                        }
-
-                    }
-
-                    ?>
-                </div>
-
-
-            </div>
         </div>
 
-        <!-- Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-        <script src="home.js"></script>
-    </body>
+
+        <div class="col pr-0">
+
+
+            <?php
+            $count = 0;
+            foreach ($week_events as $row) {
+                if ($row[14] == 2) { //Produce a list of cards for Tuesday
+                    echo '<div class="card bg-light mb-3">';
+                    echo "<div class=\"card-header\">{$row[0]}</div>";
+                    echo "<div class=\"text-center\" >
+                            <a id=\"tuesdayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#tuesday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
+                        </div>";
+                    echo "<div class=\"collapse multi-collapse\" id=\"tuesday{$count}\">";
+                    echo "<div class=\"card-body\">";
+                    echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Date:</b> {$row[5]}</p>
+                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
+                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
+                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
+                    echo '</div></div></div>';
+                    $count += 1;
+                }
+
+            }
+
+            ?>
+
+
+        </div>
+
+
+        <div class="col pr-0">
+            <?php
+            $count = 0;
+            foreach ($week_events as $row) {
+                if ($row[14] == 3) { //Produce a list of cards for Wednesday
+                    echo '<div class="card bg-light mb-3">';
+                    echo "<div class=\"card-header\">{$row[0]}</div>";
+                    echo "<div class=\"text-center\" >
+                            <a id=\"wednesdayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#wednesday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
+                        </div>";
+                    echo "<div class=\"collapse multi-collapse\" id=\"wednesday{$count}\">";
+                    echo "<div class=\"card-body\">";
+                    echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Date:</b> {$row[5]}</p>
+                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
+                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
+                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
+                    echo '</div></div></div>';
+                    $count += 1;
+                }
+
+            }
+
+            ?>
+        </div>
+
+
+        <div class="col pr-0">
+
+            <?php
+            $count = 0;
+            foreach ($week_events as $row) {
+                if ($row[14] == 4) { //Produce a list of cards for Thursday
+                    echo '<div class="card bg-light mb-3">';
+                    echo "<div class=\"card-header\">{$row[0]}</div>";
+                    echo "<div class=\"text-center\" >
+                            <a id=\"thursdayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#thursday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
+                        </div>";
+                    echo "<div class=\"collapse multi-collapse\" id=\"thursday{$count}\">";
+                    echo "<div class=\"card-body\">";
+                    echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Date:</b> {$row[5]}</p>
+                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
+                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
+                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
+                    echo '</div></div></div>';
+                    $count += 1;
+                }
+            }
+
+            ?>
+        </div>
+
+
+        <div class="col pr-0">
+            <?php
+            $count = 0;
+            foreach ($week_events as $row) {
+                if ($row[14] == 5) { //Produce a list of cards for Friday
+                    echo '<div class="card bg-light mb-3">';
+                    echo "<div class=\"card-header\"> {$row[0]}</div>";
+                    echo "<div class=\"text-center\" >
+                            <a id=\"fridayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#friday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
+                        </div>";
+                    echo "<div class=\"collapse multi-collapse\" id=\"friday{$count}\">";
+                    echo "<div class=\"card-body\">";
+                    echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Date:</b>{$row[5]}</p>
+                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
+                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
+                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
+                    echo '</div></div></div>';
+                    $count += 1;
+                }
+            }
+
+            ?>
+        </div>
+
+
+        <div class="col pr-0">
+            <?php
+            $count = 0;
+            foreach ($week_events as $row) {
+                if ($row[14] == 6) { //Produce a list of cards for Saturday
+                    echo '<div class="card bg-light mb-3">';
+                    echo "<div class=\"card-header\"> {$row[0]}</div>";
+                    echo "<div class=\"text-center\" >
+                            <a id=\"saturdayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#saturday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
+                        </div>";
+                    echo "<div class=\"collapse multi-collapse\" id=\"saturday{$count}\">";
+                    echo "<div class=\"card-body\">";
+                    echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Date:</b>{$row[5]}</p>
+                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
+                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
+                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
+                    echo '</div></div></div>';
+                    $count += 1;
+                }
+            }
+
+            ?>
+        </div>
+
+
+        <div class="col pr-0">
+            <?php
+            $count = 0;
+            foreach ($week_events as $row) {
+                if ($row[14] == 0) { //Produce a list of cards for Sunday
+                    echo '<div class="card bg-light mb-3">';
+                    echo "<div class=\"card-header\">{$row[0]}</div>";
+                    echo "<div class=\"text-center\" >
+                            <a id=\"sundayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#sunday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
+                        </div>";
+                    echo "<div class=\"collapse multi-collapse\" id=\"sunday{$count}\">";
+                    echo "<div class=\"card-body\">";
+                    echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Date:</b> {$row[5]}</p>
+                                <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
+                                <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
+                                <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
+                    echo '</div></div></div>';
+                    $count += 1;
+                }
+
+            }
+
+            ?>
+        </div>
+
+
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+<script src="home.js"></script>
+</body>
 </html>
