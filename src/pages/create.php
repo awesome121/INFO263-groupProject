@@ -1,4 +1,5 @@
 <?php
+    // Set cookie for search keywords from the previous page
     setcookie('keywords', $_GET['keywords']);
 
     // Require the database credentials.
@@ -20,21 +21,19 @@
     $week_of_year = (new DateTime(join('-', explode('/', $date))))->format('W');
     $since_start = (new DateTime($start_time))->diff(new DateTime($end_time), true);
     $duration = $since_start->format('%H:%I:%S');
+    // Prepare information pass in the database above
 
 
     // Only create an event if all the required fields have been filled in.
     if ($event_name && $cluster && $date && $start_time && $end_time && $machine_groups) {
-        // TODO: Save event in database, maybe check that start time is before end time and date is in the future?
-
         // Open a database connection.
         $conn = new mysqli($hostname, $username, $password, $database);
         $query = "call add_event('$event_name');";
         $add_event = mysqli_query($conn, $query);
         $row = mysqli_fetch_row($add_event);
         $event_id = $row[0];
-        //echo "event_name: " . $event_name . '<br>';
 
-
+        // Open a database connection.
         $conn = new mysqli($hostname, $username, $password, $database);
         $query = "call get_cluster_id_by_name('$cluster');";
         $get_cluster_id_by_name = mysqli_query($conn, $query);
@@ -42,16 +41,18 @@
         $cluster_id = $row[0];
 
 
+        // Open a database connection.
         $conn = new mysqli($hostname, $username, $password, $database);
         $query = "call add_action($event_id, '$cluster_id', '-00:05:00', '$duration');";
         $add_action = mysqli_query($conn, $query);
-        //echo "event_id: " . $event_id . 'cluster:' . $cluster . 'duration: ' . $duration . '<br>';
 
+
+        // Open a database connection.
         $conn = new mysqli($hostname, $username, $password, $database);
         $query = "call add_weekly($event_id, $year, $week_of_year);";
         $add_weekly = mysqli_query($conn, $query);
-        //echo 'year'.$year.'weekofyear' . $week_of_year.'<br>';
 
+        // Open a database connection.
         $machine_group_ids = array();
         foreach ($machine_groups as $machine_group) {
             $conn = new mysqli($hostname, $username, $password, $database);
@@ -61,6 +62,7 @@
             array_push($machine_group_ids, $group_id);
         }
 
+        // Open a database connection.
         foreach ($machine_group_ids as $group_id){
             $conn = new mysqli($hostname, $username, $password, $database);
             $start_time = (new DateTime($start_time))->format('H:i:s');
@@ -68,9 +70,6 @@
             $add_daily = mysqli_query($conn, $query);
             //echo 'group_id' . $group_id . 'day_of_week' . $day_of_week . 'start_time:'. $start_time . '<br>';
         }
-
-
-
 
         $event_created = true;
         // Set the event created variable to true so that we can show the event created successfully message on the page below.
@@ -130,12 +129,13 @@
                     
                     <div id="hint" class="dropdown-menu">
                         <?php
+                            // Produce a list of dropdown items
                             if (isset($keywords)) {
-                                if ($keywords != "" and sizeof($hint) == 0) {
+                                if ($keywords != "" and sizeof($hint) == 0) { //if keywords are typed in and no suggestion
                                     echo "<a class='dropdown-item'>No results</a>";
 
                                 } else {
-                                    foreach ($hint as $key => $value) {
+                                    foreach ($hint as $key => $value) { //if there is a search result
                                         echo "<a class='dropdown-item' href='search_results.php?q=$value'>$value</a> ";
                                     };
                                 };
@@ -192,6 +192,8 @@
                                         <option selected disabled></option>
 
                                         <?php
+                                            //Produce a list of clusters
+                                            // new database connection
                                             $conn = new mysqli($hostname, $username, $password, $database);
                                             $query = "call get_cluster_name();";
 
@@ -234,6 +236,8 @@
 
                                     <select class="form-control" name="machine_groups[]" id="machine_groups" multiple required>
                                         <?php
+                                            // Produce a list of machine groups
+                                            // new database connection
                                             $conn = new mysqli($hostname, $username, $password, $database);
                                             $query = "call get_machine_group();";
 
