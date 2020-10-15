@@ -80,6 +80,7 @@ setcookie('keywords', $_GET['keywords']);
         </nav>
 
         <div class="container-fluid">
+            <h1>Past Events Table</h1>
             <!-- Table based off of Constantine's help session -->
             <?
             //Open database connection and run the query

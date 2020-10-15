@@ -42,17 +42,17 @@
         $add_event = mysqli_query($conn, $query);
         $row = mysqli_fetch_row($add_event);
         $event_id = $row[0];
-        echo "event_name: " . $event_name . '<br>';
+        //echo "event_name: " . $event_name . '<br>';
 
         $conn = new mysqli($hostname, $username, $password, $database);
         $query = "call add_action($event_id, '$cluster', '-00:05:00', '$duration');";
         $add_action = mysqli_query($conn, $query);
-        echo "event_id: " . $event_id . 'cluster:' . $cluster . 'duration: ' . $duration . '<br>';
+        //echo "event_id: " . $event_id . 'cluster:' . $cluster . 'duration: ' . $duration . '<br>';
 
         $conn = new mysqli($hostname, $username, $password, $database);
         $query = "call add_weekly($event_id, $year, $week_of_year);";
         $add_weekly = mysqli_query($conn, $query);
-        echo 'year'.$year.'weekofyear' . $week_of_year.'<br>';
+        //echo 'year'.$year.'weekofyear' . $week_of_year.'<br>';
 
         $machine_group_ids = array();
         foreach ($machine_groups as $machine_group) {
@@ -68,7 +68,7 @@
             $start_time = (new DateTime($start_time))->format('H:i:s');
             $query = "call add_daily($event_id, $group_id, $day_of_week, '$start_time');";
             $add_daily = mysqli_query($conn, $query);
-            echo 'group_id' . $group_id . 'day_of_week' . $day_of_week . 'start_time:'. $start_time . '<br>';
+            //echo 'group_id' . $group_id . 'day_of_week' . $day_of_week . 'start_time:'. $start_time . '<br>';
         }
 
 

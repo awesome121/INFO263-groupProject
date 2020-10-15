@@ -125,3 +125,7 @@ form.searchbar::after {
 }
 
 .show {display: block;}
+
+#column{
+    padding-left: 30px;
+}

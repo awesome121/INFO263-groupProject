@@ -117,7 +117,9 @@ while ($row != NULL) {
         </nav>
 
         <div id="calendar" class="row mt-3" >
-                <div class="col">
+
+                <div class="col" id="column">
+                    <h1>Current Week Events</h1>
                     <button onclick="calendarSwitch(1)" type="button" class="btn btn-secondary"><</button>
                     <span id="currentDate" class="h4"><?php
                         echo $_GET['startDate'] . " - " . $_GET['endDate'];
@@ -190,6 +192,7 @@ while ($row != NULL) {
                             echo "<div class=\"collapse multi-collapse\" id=\"monday{$count}\">";
                             echo "<div class=\"card-body\">";
                             echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Date:</b> {$row[5]}</p>
                                 <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
                                 <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
                                 <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
@@ -219,6 +222,7 @@ while ($row != NULL) {
                             echo "<div class=\"collapse multi-collapse\" id=\"tuesday{$count}\">";
                             echo "<div class=\"card-body\">";
                             echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Date:</b> {$row[5]}</p>
                                 <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
                                 <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
                                 <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
@@ -247,6 +251,7 @@ while ($row != NULL) {
                             echo "<div class=\"collapse multi-collapse\" id=\"wednesday{$count}\">";
                             echo "<div class=\"card-body\">";
                             echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Date:</b> {$row[5]}</p>
                                 <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
                                 <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
                                 <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
@@ -274,6 +279,7 @@ while ($row != NULL) {
                             echo "<div class=\"collapse multi-collapse\" id=\"thursday{$count}\">";
                             echo "<div class=\"card-body\">";
                             echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Date:</b> {$row[5]}</p>
                                 <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
                                 <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
                                 <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
@@ -292,13 +298,14 @@ while ($row != NULL) {
                     foreach ($week_events as $row) {
                         if ($row[14] == 5) { // Friday
                             echo '<div class="card bg-light mb-3">';
-                            echo "<div class=\"card-header\">{$row[0]}</div>";
+                            echo "<div class=\"card-header\"> {$row[0]}</div>";
                             echo "<div class=\"text-center\" >
                             <a id=\"fridayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#friday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
                         </div>";
                             echo "<div class=\"collapse multi-collapse\" id=\"friday{$count}\">";
                             echo "<div class=\"card-body\">";
                             echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Date:</b>{$row[5]}</p>
                                 <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
                                 <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
                                 <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
@@ -317,13 +324,14 @@ while ($row != NULL) {
                     foreach ($week_events as $row) {
                         if ($row[14] == 6) { // Saturday
                             echo '<div class="card bg-light mb-3">';
-                            echo "<div class=\"card-header\">{$row[0]}</div>";
+                            echo "<div class=\"card-header\"> {$row[0]}</div>";
                             echo "<div class=\"text-center\" >
                             <a id=\"saturdayCard{$count}\"  class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#saturday{$count}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"multiCollapseExample1\">Show more</a>
                         </div>";
                             echo "<div class=\"collapse multi-collapse\" id=\"saturday{$count}\">";
                             echo "<div class=\"card-body\">";
                             echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Date:</b>{$row[5]}</p>
                                 <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
                                 <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
                                 <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
@@ -349,6 +357,7 @@ while ($row != NULL) {
                             echo "<div class=\"collapse multi-collapse\" id=\"sunday{$count}\">";
                             echo "<div class=\"card-body\">";
                             echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
+                                <p class=\"card-text\"><b>Date:</b> {$row[5]}</p>
                                 <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
                                 <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
                                 <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";

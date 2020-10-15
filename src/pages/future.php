@@ -80,6 +80,7 @@ setcookie('keywords', $_GET['keywords']);
         </nav>
 
         <div class="container-fluid">
+            <h1>Future Events Table</h1>
             </div>
             <!-- Table based off of Constantine's help session -->
             <?
