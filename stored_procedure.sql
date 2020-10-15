@@ -13,6 +13,8 @@ DROP procedure IF EXISTS `add_weekly`;
 DROP procedure IF EXISTS `add_daily`;
 DROP procedure IF EXISTS `add_action`;
 DROP procedure IF EXISTS `get_machine_group_id_by_name`;
+DROP procedure IF EXISTS `get_cluster_id_by_name`;
+
 
 
 CREATE TABLE `front_user` (
@@ -182,18 +184,16 @@ DELIMITER ;
 DELIMITER $$ 
 CREATE PROCEDURE `add_action`(
 IN event_id int(11),
-IN in_cluster_name VARCHAR(128),
+IN in_cluster_id int(11),
 IN in_time_off_set_before_start TIME,
 IN in_duration TIME
 )
 BEGIN
-/* get the corresponding cluster id */
-    set @cluster_id = (select cluster_id from front_cluster where cluster_name = in_cluster_name);
     /* insert actions and week */
     insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_time_off_set_before_start, 3, 0);
-    insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_time_off_set_before_start, cluster_id, 1);
+    insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_time_off_set_before_start, in_cluster_id, 1);
     insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_duration, 3, 1);
-    insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_duration, cluster_id, 0);
+    insert into front_action(event_id, time_offset, cluster_id, activate) values (event_id, in_duration, in_cluster_id, 0);
     
 END$$
 DELIMITER ;
@@ -207,4 +207,16 @@ BEGIN
 	select group_id from front_group where machine_group = in_machine_group;
 END$$
 DELIMITER ;
+
+
+DELIMITER $$
+CREATE PROCEDURE `get_cluster_id_by_name`(
+IN in_cluster_name VARCHAR(128)
+)
+BEGIN
+select cluster_id from front_cluster where cluster_name = in_cluster_name;
+END$$
+DELIMITER ;
+
+
 
