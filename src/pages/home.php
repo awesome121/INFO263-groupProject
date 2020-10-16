@@ -51,7 +51,6 @@ function show_week_events($conn)
 
 $conn = new mysqli($hostname, $username, $password, $database); // New database connection
 $hint = get_past_events($conn, $keywords);
-echo $hint;
 $conn = new mysqli($hostname, $username, $password, $database); // New database connection
 $week_events = show_week_events($conn);
 
