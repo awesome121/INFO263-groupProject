@@ -252,12 +252,6 @@
                                     </select>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="notes">Notes</label>
-
-                                    <textarea class="form-control" name="notes" id="notes" rows="5"></textarea>
-                                </div>
-
                                 <div class="text-center">
                                     <button class="btn btn-danger" type="submit">Create</button>
                                 </div>
