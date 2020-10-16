@@ -253,7 +253,7 @@ $week_events = show_week_events($conn);
                     echo "<div class=\"collapse multi-collapse\" id=\"tuesday{$count}\">";
                     echo "<div class=\"card-body\">";
                     echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
-                                <p class=\"card-text\"><b>Date:</b> {$row[5]}</p>
+                                <p class=\"card-text\"><b> Date:</b> {$row[5]}</p>
                                 <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
                                 <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
                                 <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
@@ -336,7 +336,7 @@ $week_events = show_week_events($conn);
                     echo "<div class=\"collapse multi-collapse\" id=\"friday{$count}\">";
                     echo "<div class=\"card-body\">";
                     echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
-                                <p class=\"card-text\"><b>Date:</b>{$row[5]}</p>
+                                <p class=\"card-text\"><b>Date:</b> {$row[5]}</p>
                                 <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
                                 <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
                                 <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";
@@ -362,7 +362,7 @@ $week_events = show_week_events($conn);
                     echo "<div class=\"collapse multi-collapse\" id=\"saturday{$count}\">";
                     echo "<div class=\"card-body\">";
                     echo "<p class=\"card-text\"><b>Time:</b> {$row[6]}</p>
-                                <p class=\"card-text\"><b>Date:</b>{$row[5]}</p>
+                                <p class=\"card-text\"><b>Date:</b> {$row[5]}</p>
                                 <p class=\"card-text\"><b>Activate Status:</b> {$row[7]}</p>
                                 <p class=\"card-text\"><b>Cluster Name:</b> {$row[1]}</p>
                                 <p class=\"card-text\"><b>Machine Group:</b> {$row[3]}</p>";

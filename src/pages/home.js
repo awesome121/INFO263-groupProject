@@ -1,6 +1,3 @@
-
-
-
 /**
  * A function to search suggestion using Ajax approach
  * The function will be called once the user's key is up, but it has to be at least 3 characters
