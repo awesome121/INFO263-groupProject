@@ -12,7 +12,7 @@ To ensure a successful setup, there are three important steps:
 2. Please use MySQL Workbench, execute stored_procedure.sql to create procedures and views used in the web pages.
   (Ignore this if you have already created those procedures in your database)
   
-#Login
+# Login
 Please refer fron_user table to view account information for lecturers<br>
 For example, username: cgo54 and its password: 123456
 
