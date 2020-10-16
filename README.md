@@ -27,10 +27,10 @@ display all future events including current day future events
 display a list of events searched by the user
 
 
-# Acknowledgement
+# Acknowledgement<br>
 Gong, Changxing<br>
 Schleuss, Emily<br>
 Smith, Leilani<br>
-Sukarno, Amira Syakira <br>
+Sukarno, Amira Syakira <br><br>
 16/10/2020
 
