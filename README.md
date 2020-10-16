@@ -16,11 +16,21 @@ To ensure a successful setup, there are three important steps:
 ### login page
 users will need a valid username and password to log into the interface
 ### home page 
-displaying a calendar of what is happening this week, and users will be able to check events in the future by weeks
+display a calendar of what is happening this week, and users will be able to check events in the future by weeks
 ### create page
-use to define event - new event created will be configured into te database
+use to define event - new event created will be created into the database
 ### past page
-displaying all the events history includin current day past events
+display all the events history including current day past events
 ### future page
-displaying all future events including current day future events
+display all future events including current day future events
+### search result page
+display a list of events searched by the user
+
+
+# Acknowledgement
+Gong, Changxing
+Schleuss, Emily
+Smith, Leilani
+Sukarno, Amira Syakira 
+16/10/2020
 
