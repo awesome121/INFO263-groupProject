@@ -28,9 +28,9 @@ display a list of events searched by the user
 
 
 # Acknowledgement
-Gong, Changxing
-Schleuss, Emily
-Smith, Leilani
-Sukarno, Amira Syakira 
+Gong, Changxing<br>
+Schleuss, Emily<br>
+Smith, Leilani<br>
+Sukarno, Amira Syakira <br>
 16/10/2020
 
