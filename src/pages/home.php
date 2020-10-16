@@ -7,9 +7,9 @@ require_once('../db_config.php');
  * Get all the past events
  *
  */
-function get_past_events($conn)
+$keywords = $_GET['keywords'];
+function get_past_events($conn, $keywords)
 {
-    $keywords = $_GET['keywords'];
     $hint = array();
     $query = "call show_events_past();";
     $events = mysqli_query($conn, $query);
@@ -50,7 +50,8 @@ function show_week_events($conn)
 
 
 $conn = new mysqli($hostname, $username, $password, $database); // New database connection
-$hint = get_past_events($conn);
+$hint = get_past_events($conn, $keywords);
+echo $hint;
 $conn = new mysqli($hostname, $username, $password, $database); // New database connection
 $week_events = show_week_events($conn);
 
@@ -105,7 +106,7 @@ $week_events = show_week_events($conn);
                 <button class="btn btn-secondary my-2 my-sm-0" type="button"
                         onclick="window.location.href='search_results.php'"><i class="fa fa-search"></i></button>
 
-                <d id="hint" class="dropdown-menu" hidden="true">
+                <d id="hint" class="dropdown-menu">
                     <?php
                     // Produce a list of dropdown items
                     if (isset($keywords)) {

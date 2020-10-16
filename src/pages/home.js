@@ -94,7 +94,7 @@ function init_button() {
 
 
 init_button();
-document.getElementById("hint").hidden = true;
+//document.getElementById("hint").hidden = true;
 
 
 
