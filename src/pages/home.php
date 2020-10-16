@@ -23,6 +23,20 @@ function get_past_events($conn, $keywords)
     return $hint;
 }
 
+function get_future_events($conn, $keywords, $hint)
+{
+    $query = "call show_events_future();";
+    $events = mysqli_query($conn, $query);
+    $row = mysqli_fetch_row($events);
+    while ($keywords != "" and $row != NULL and sizeof($hint) < 7) {
+        if (strpos(strtolower(explode(" ", $row[0])[0]), strtolower($keywords)) !== false and !array_key_exists($row[8], $hint)) {
+            $hint[$row[8]] = $row[0];
+        }
+        $row = mysqli_fetch_row($events);
+    }
+    return $hint;
+}
+
 
 /**
  * show all the past events in the specified date range
@@ -51,6 +65,8 @@ function show_week_events($conn)
 
 $conn = new mysqli($hostname, $username, $password, $database); // New database connection
 $hint = get_past_events($conn, $keywords);
+$conn = new mysqli($hostname, $username, $password, $database); // New database connection
+$hint = get_future_events($conn, $keywords, $hint);
 $conn = new mysqli($hostname, $username, $password, $database); // New database connection
 $week_events = show_week_events($conn);
 
