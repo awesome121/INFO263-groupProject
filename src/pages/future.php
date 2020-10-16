@@ -48,7 +48,7 @@ setcookie('keywords', $_GET['keywords']);
                     <a class="nav-link" href="past.php">Past Events</a>
                 </li>
             </ul>
-            //Generating a search bar engine
+            <!--Generating a search bar engine-->
             <div class="form-inline my-2 my-lg-0">
                 <div class="dropdown">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search events" onkeyup="showSearchResult(this.value);" data-toggle="dropdown" aria-label="Search">
