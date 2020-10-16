@@ -13,7 +13,7 @@ To ensure a successful setup, there are three important steps:
   (Ignore this if you have already created those procedures in your database)
   
 # Login Instruction
-Please refer fron_user table to view account information for lecturers<br>
+Please refer front_user table to view account information for lecturers<br>
 For example, username: cgo54 and its password: 123456
 
 ## Web page structure
